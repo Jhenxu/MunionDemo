@@ -199,7 +199,7 @@ mExService.appkey = "xxxxxxxxxxxxxx";
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="../images/android/电商墙01.png" width="250" height="400">   | <img src="../images/android/电商墙02.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall02.png" width="250" height="400"> |
 |  图8-1 电商墙样式   | 图8-2 电商墙搜索  |
 
 
@@ -207,7 +207,7 @@ mExService.appkey = "xxxxxxxxxxxxxx";
 
 |                         |                                 |
 |:------------------------:|:------------------------------:|
-| <img src="../images/android/应用墙01.png" width="250" height="400">   | <img src="../images/android/应用墙02.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall02.png" width="250" height="400"> |
 |  图8-1 精品推荐样式1   | 图8-2 精品推荐样式2  |
 
 3.1动态图标

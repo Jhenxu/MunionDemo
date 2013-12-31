@@ -281,7 +281,7 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(nul
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="../images/android/电商墙01.png" width="250" height="400">   | <img src="../images/android/电商墙02.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall02.png" width="250" height="400"> |
 |  图8-1 电商墙样式   | 图8-2 电商墙搜索  |
 
 
@@ -289,7 +289,7 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(nul
 
 |                         |                                 |
 |:------------------------:|:------------------------------:|
-| <img src="../images/android/应用墙01.png" width="250" height="400">   | <img src="../images/android/应用墙02.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall02.png" width="250" height="400"> |
 |  图8-1 精品推荐样式1   | 图8-2 精品推荐样式2  |
 
 3.1动态图标
@@ -578,7 +578,7 @@ root.findViewById(R.id.entrance).setOnClickListener(new OnClickListener() {
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="../images/android/creditwall01.png" width="250" height="400">   | <img src="../images/android/creditwall02.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/creditwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/creditwall02.png" width="250" height="400"> |
 |  图8-1 积分墙样式1   | 图8-2 积分墙样式2  |
 
 * 积分接口
@@ -660,7 +660,7 @@ Demo中给出了一个信息流样式集成的使用场景，初始化过程在X
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="../images/android/信息流01.png" width="250" height="400">   | <img src="../images/android/信息流02.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed02.png" width="250" height="400"> |
 |  图8-1 信息流样式1   | 图8-2 信息流样式2  |
 
 * 积分接口
