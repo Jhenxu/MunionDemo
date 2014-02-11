@@ -378,6 +378,8 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id"))
 
 ### 4. 内嵌入口
 
+集成方式：
+
 ```
 ViewGroup fatherLayout = (ViewGroup) this.findViewById(R.id.ad);
 ListView listView = (ListView) this.findViewById(R.id.list);
@@ -410,6 +412,7 @@ exchangeViewManager.addView(fatherLayout, listView);
 
 1.在入口处预加载物料。
 入口Activity中：
+
 ```
 preloadDataService = new ExchangeDataService("40251");
 preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
@@ -473,6 +476,57 @@ FloatDialogConfig config = new FloatDialogConfig
             
 vMgr.setFloatDialogConfig(config);
 vMgr.addView(null, ExchangeConstants.type_float_dialog);
+```
+
+回调设置
+
+```
+final FloatDialogListener pushListener = new XpListenersCenter.FloatDialogListener() {
+            /**
+             * 开始加载广告
+             */
+            @Override
+            public void onStart() {
+                Log.d("TestData", "onStart");
+            }
+
+            /**
+             * 获取广告准备渲染 0 failed 1 successed
+             *
+             * @param status
+             */
+            @Override
+            public void onPrepared(int status) {
+                Log.d("TestData", "onPrepared " + status);
+
+            }
+
+            /**
+             * 显示窗口
+             * @param isTimeout 是否超时 超时将不显示
+             */
+            @Override
+            public void onShow(boolean isTimeout) {
+                Log.d("TestData", "onShow  " + isTimeout);
+            }
+
+            /**
+             * 隐藏窗口
+             */
+            @Override
+            public void onClose() {
+                Log.d("TestData", "onClose  ");
+            }
+
+            /**
+             * 推广信息被点击
+             */
+            @Override
+            public void onClick() {
+                Log.d("TestData", "onClick  ");
+            }
+
+        };
 ```
 
 |                         |                                 |
@@ -717,7 +771,7 @@ public void onCreate(Bundle savedInstanceState) {
 }       
 ```
 
-### 2. 可以通过设置下面的变量改变SDK默认的界面或者行为。
+### 2. 可以通过设置下面的变量改变SDK默认的界面或者行为
 
 >* ExchangeConstants.full_screen: 显示全屏推荐时是否隐藏系统工具栏
 >* ExchangeConstants.blur_switcher: 弹出窗口后是否使用阴影遮挡其他部分
@@ -735,8 +789,33 @@ public void onCreate(Bundle savedInstanceState) {
 &nbsp;&nbsp;&nbsp;  com.umeng.common.ufp.Log.LOG = true; <br>
 &nbsp;&nbsp;&nbsp;  ExchangeConstants.DEBUG_MODE=true;
 
+### 3. 其他接口功能介绍
 
-### 3. 权限说明
+#### 1.Exchange.initializeListener 数据初始化回调接口
+
+推广数据加载回调，可用来判断推广信息是否加载成功
+
+使用方法：
+
+```
+exDataService = ...
+
+exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
+            @Override
+            public void onStartRequestData(int type) {
+            	//开始加载推广信息，type:广告位类型
+            }
+
+            @Override
+            public void onReceived(int count) {
+            	//count:成功加载推广信息的数量
+            }
+        };
+        
+```
+
+
+### 4. 权限说明
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tbody><tr>
@@ -765,7 +844,7 @@ public void onCreate(Bundle savedInstanceState) {
 </tbody></table>
 
 
-### 4. 混淆
+### 5. 混淆
 
 ```
 -dontwarn com.umeng.**
@@ -783,6 +862,7 @@ public void onCreate(Bundle savedInstanceState) {
 }
 ```
 > 混淆过程中遇到的问题,具体请见[这里](/faq/faq_diff_android.html?expand=1).
+
 
 ## 技术支持
 请发邮件至<support@umeng.com>，我们会尽快回复您。 

@@ -1,4 +1,25 @@
 # 友盟UFP Release Note
+
+##### 版本: v6.7.20140109（meitu）
+##### 发布日期: 2013.01.09  
+##### 更新：
+
+1.修复电商墙错误页面点击“重试”后一直处于"Loading"状态
+
+2.添加设置应用墙默认tab名称（应用墙当且仅有一个tab的情况下，顶部Actionbar标题将显示tab名称且隐藏tab）
+
+* ExchangeConstants.DEFAULT_HANDLE_APP_WALL_TITLE
+
+
+##### 版本: v6.7.20140108（meitu）
+##### 发布日期: 2013.01.08  
+##### 更新：
+
+1.修复下载过程中使用‘multitask panel’关闭应用导致下载通知栏残留
+
+2.设置默认tab为App
+
+
 ##### 版本: v6.8.20131230
 ##### 发布日期: 2013.12.30  
 ##### 更新：
@@ -16,6 +37,11 @@
 1.添加接口onHandlerVisListener 预加载入口展示回调
 
 * exMgr.addView(ExchangeConstants.type_list_curtain, lazyHandleVp,mHandleVisListener);
+
+2.添加UMHandleReletiveLayout
+
+* 可扩展clicklistener
+
 
 ##### 版本: v6.7.20131225
 ##### 发布日期: 2013.12.25  
