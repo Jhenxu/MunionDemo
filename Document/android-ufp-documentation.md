@@ -467,21 +467,20 @@ viewMgr.addView(parent, ExchangeConstants.type_large_image);
 ```
 ExchangeDataService es = new ExchangeDataService("slot_id");
 ExchangeViewManager vMgr = new ExchangeViewManager(mContext, es);
-FloatDialogConfig config = new FloatDialogConfig
-    //可选配置
+FloatDialogConfig config = new FloatDialogConfig//可选配置
     .setTimeout(3000)//设置弹窗超时不显示时间
     .setDelay(true)//设置窗口网页加载到一定进度再弹出(setDelayProgress)
-    .setListener(pushListener)//设置Push周期回调
+    //.setListener(pushListener)//设置Push周期回调
     .setDelayProgress(30);//设置窗口延迟弹出进度
             
-vMgr.setFloatDialogConfig(config);
+vMgr.setFeatureConfig(config);
 vMgr.addView(null, ExchangeConstants.type_float_dialog);
 ```
 
 回调设置
 
 ```
-final FloatDialogListener pushListener = new XpListenersCenter.FloatDialogListener() {
+FloatDialogListener pushListener = new XpListenersCenter.FloatDialogListener() {
             /**
              * 开始加载广告
              */
@@ -531,7 +530,7 @@ final FloatDialogListener pushListener = new XpListenersCenter.FloatDialogListen
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="http://dev.umeng.com/images/android/image011.png" width="250" height="400">   | <img src="http://dev.umeng.com/images/android/image012.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/popup01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/popup02.png" width="250" height="400"> |
 | 图11-1 60%窗口  | 图11-2 全屏  |
 
 

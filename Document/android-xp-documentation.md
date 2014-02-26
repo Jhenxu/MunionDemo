@@ -32,11 +32,12 @@
 ### 3.3 添加appkey,渠道
 在`<application>`中添加
 
+
 ```
-<!-- 添加渠道信息 -->
-<meta-data android:value="xxxxxxxx" android:name="UMENG_CHANNEL"></meta-data>
-<!-- 添加appkey -->
-<meta-data android:value="xxxxxxxx" android:name="UMENG_APPKEY"></meta-data>
+	<!-- 添加渠道信息 -->
+	<meta-data android:value="xxxxxxxx" android:name="UMENG_CHANNEL"/>
+	<!-- 添加appkey -->
+	<meta-data android:value="xxxxxxxx" android:name="UMENG_APPKEY"/>
 ```
 
 _**<font color=‘#green'>注意：</font>**_ 如果Manifest文件中已经添加了Umeng其他产品的Appkey,交换网络SDK的appkey可以在代码中添加，避免和其他产品appkey冲突
@@ -92,7 +93,7 @@ mExService.appkey = "xxxxxxxxxxxxxx";
 
 
 ```
-        <!-- 应用墙 -->
+		<!-- 应用墙 -->
         <activity
             android:name="com.umeng.newxp.view.handler.umwall.UMWall"
             android:configChanges="keyboard|orientation"
@@ -283,6 +284,41 @@ new ExchangeViewManager(context, new ExchangeDataService())
         
     </RelativeLayout>
 ```   
+
+### 2. 横幅(banner)
+
+```
+ExchangeDataService service = new ExchangeDataService();
+ExchangeViewManager viewMgr = new ExchangeViewManager(context, service);
+viewMgr.addView(parent, ExchangeConstants.type_standalone_handler);
+```
+
+|                         |                                 |
+|:------------------------:|:------------------------------------:|
+| <img src="http://dev.umeng.com/images/android/image001.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image002.png" width="300" height="400"> |
+| 图6-1 banner广告 | 图6-2 广告细节  |
+
+### 7. Push弹窗
+该样式内容是以Web形式，所以加载有一定延迟。后台可配置弹窗大小。
+
+```
+ExchangeDataService es = new ExchangeDataService();
+ExchangeViewManager vMgr = new ExchangeViewManager(mContext, es);
+FloatDialogConfig config = new FloatDialogConfig()//可选配置
+    .setTimeout(3000)//设置弹窗超时不显示时间
+    .setDelay(true)//设置窗口网页加载到一定进度再弹出(setDelayProgress)
+    //.setListener(pushListener)//设置Push周期回调
+    .setDelayProgress(30);//设置窗口延迟弹出进度
+            
+vMgr.setFeatureConfig(config);
+vMgr.addView(null, ExchangeConstants.type_float_dialog);
+```
+
+|                         |                                 |
+|:------------------------:|:------------------------------------:|
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/popup01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/popup02.png" width="250" height="400"> |
+| 图11-1 60%窗口  | 图11-2 全屏  |
+
 
 ## 备注
 
