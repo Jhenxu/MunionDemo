@@ -31,6 +31,27 @@ UFP提供了App自主推广，广告管理，App间交叉推广等功能。
     <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/slots.png"/></a></div><div style="clear:both"></div>
 
   <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/create_ad.png"/></div><div style="clear:both"></div>
+  
+### <a name="open_taobao"></a>2.1 申请淘宝开放平台账号(自定义入口样式需要申请,不集成自定义入口可以跳过)
+
+* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，<a href="http://www.umeng.com/aboutus_contact">客服联系方式</a>
+
+* **登录** http://open.taobao.com/index.htm 
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_index.jpg"/></a></div><div style="clear:both"></div>
+  
+* **点击加入开放平台并登录** 登录后按照引导进行开发者认证，认证完成后，您将看到如下页面，点击创建应用
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_login.jpg"/></a></div><div style="clear:both"></div>  
+  
+* **创建应用** 填写应用名称 (应用标签必须选择无线营销)--> 申请开发测试，上传图片 --> 提交安全扫描 --> 等待对外发布
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_01.jpg"/></a></div><div style="clear:both"></div>  
+
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_02.jpg"/></a></div><div style="clear:both"></div>  
+
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_create_app_03.jpg"/></a></div><div style="clear:both"></div>
+
+* **Android应用认证** 申请完成后，按照下图，点击Android应用认证，填写758665872，保存
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_taobao_android_sign.jpg"/></a></div><div style="clear:both"></div>
+
 
 ## 3. SDK的集成
 
@@ -65,6 +86,7 @@ UFP提供了App自主推广，广告管理，App间交叉推广等功能。
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 ```
 
 ### 3.5 添加服务
@@ -166,6 +188,7 @@ UFP提供了App自主推广，广告管理，App间交叉推广等功能。
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 </manifest>
 ```
 
@@ -252,10 +275,13 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(nul
 ```
 
 ### 3. 自定义入口
+* 请联系我们的客服，将您的淘宝账号加入到我们的白名单中<a href="http://www.umeng.com/aboutus_contact">客服</a>
+
+* 确认使用上一步加入白名单的淘宝账号到<a href="http://open.taobao.com/index.htm">淘宝开放平台</a>申请加入，并创建应用，<a href="#open_taobao">点击查看创建流程</a> 
 
 * 自定义入口已升级，需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
 
-* 确认注册了以下Activity
+* 确认注册了以下Activity,其中EwallContainerActivity 需要增加data标签,其中host="oauth.m.taobao.com" android:pathPattern="/callback*" 固定填写,android:scheme为btaobao开头，加之前注册开放平台并创建应用的appkey,如android:scheme="btaobao21736666"
 
 ```
         <!-- 应用墙 -->
@@ -269,14 +295,22 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(nul
             android:name="com.taobao.munion.ewall.EWallContainerActivity"
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
+            android:launchMode="singleTask"
+            android:exported="true"            
+            android:theme="@style/StyledIndicators">
+            
+            <data
+                    android:host="oauth.m.taobao.com"
+                    android:pathPattern="/callback*"
+                    android:scheme="btaobao21736666" />
+                    
+        </activity>
         <!-- 城市切换选择页，用于团购类页面 -->
         <activity
             android:name="com.umeng.newxp.view.UMCity"
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait" />
 ```
-
 * 电商墙效果
 
 |                         |                                 |
@@ -298,10 +332,21 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(nul
 <br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片，否则将不显示
 
 ```
+ExchangeConstants.MTOP_APPKEY = <appkey(开放平台appkey)>;
+ExchangeConstants.MTOP_APP_SECRET = <appsecret(开放平台appsecret)>;
+ExchangeConstants.MTOP_APP_SIGNATURE = <sign(android应用证书)>;
 View imageview = findViewById(R.id.rlayout1);
 new ExchangeViewManager(context, new ExchangeDataService(slot_id))
                  .addView(ExchangeConstants.type_list_curtain, imageview);
 ```
+
+MTOP_APPKEY为开放平台appkey  
+MTOP_APP_SECRET为开放平台appsecret  
+MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
+
+appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
+
+<div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
 
 1.在需要添加入口的布局文件中添加如下布局信息
 
@@ -370,11 +415,22 @@ new ExchangeViewManager(context, new ExchangeDataService(slot_id))
 在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
 
 ```
+ExchangeConstants.MTOP_APPKEY = <appkey(开放平台appkey)>;
+ExchangeConstants.MTOP_APP_SECRET = <appsecret(开放平台appsecret)>;
+ExchangeConstants.MTOP_APP_SIGNATURE = <sign(android应用证书)>;
 ImageView imageview = (ImageView) findViewById(R.id.image_view_id);
 Drawable drawable = context.getResources().getDrawable(R.drawable.drawable_id);
 new ExchangeViewManager(context, new ExchangeDataService("slot_id"))
             .addView(ExchangeConstants.type_list_curtain, imageview, drawable);            
 ```
+
+MTOP_APPKEY为开放平台appkey  
+MTOP_APP_SECRET为开放平台appsecret  
+MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
+
+appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
+
+<div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
 
 ### 4. 内嵌入口
 

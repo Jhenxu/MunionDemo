@@ -8,7 +8,7 @@
 ===
 
 
-### 2. 建立广告位，获取appkey
+### 2. 建立广告位，获取slot_id
 
 
 ## 3. SDK的集成
@@ -29,30 +29,6 @@
 > SDK提供的资源文件都以`umeng_`或`munion_`开头。
 
 
-### 3.3 添加appkey,渠道
-在`<application>`中添加
-
-
-```
-	<!-- 添加渠道信息 -->
-	<meta-data android:value="xxxxxxxx" android:name="UMENG_CHANNEL"/>
-	<!-- 添加appkey -->
-	<meta-data android:value="xxxxxxxx" android:name="UMENG_APPKEY"/>
-```
-
-_**<font color=‘#green'>注意：</font>**_ 如果Manifest文件中已经添加了Umeng其他产品的Appkey,交换网络SDK的appkey可以在代码中添加，避免和其他产品appkey冲突
-
-只使用一个交换网络appkey添加方式：
-
-```
-  ExchangeConstants.APPKEY = "xxxxxxxxxxxxx";
-```
-使用多个交换网络appkey:
-
-```
-ExchangeDataService mExService = new ExchangeDataService();
-mExService.appkey = "xxxxxxxxxxxxxx";
-```
 
 ### 3.4 添加访问权限
 
@@ -62,6 +38,7 @@ mExService.appkey = "xxxxxxxxxxxxxx";
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 ```
 
 ### 3.5 添加服务
@@ -129,9 +106,6 @@ mExService.appkey = "xxxxxxxxxxxxxx";
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Android market" />
-        <meta-data 
-        	android:value="xxxxxxxx" 
-        	android:name="UMENG_APPKEY"></meta-data>
         <activity
             android:name="com.umeng.newxp.view.UMDetail"
             android:configChanges="keyboard|orientation"
@@ -166,6 +140,7 @@ mExService.appkey = "xxxxxxxxxxxxxx";
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 </manifest>
 ```
 
@@ -219,7 +194,7 @@ mExService.appkey = "xxxxxxxxxxxxxx";
 ```
 View entrancheVp = (ImageView) findViewById(R.id.image_view_id);
 Drawable drawable = context.getResources().getDrawable(R.drawable.drawable_id);
-new ExchangeViewManager(context, new ExchangeDataService())
+new ExchangeViewManager(context, new ExchangeDataService(“slot_id”))
             .addView(ExchangeConstants.type_list_curtain, entrancheVp, drawable); 
 ```
 
@@ -288,7 +263,7 @@ new ExchangeViewManager(context, new ExchangeDataService())
 ### 2. 横幅(banner)
 
 ```
-ExchangeDataService service = new ExchangeDataService();
+ExchangeDataService service = new ExchangeDataService(“slot_id”);
 ExchangeViewManager viewMgr = new ExchangeViewManager(context, service);
 viewMgr.addView(parent, ExchangeConstants.type_standalone_handler);
 ```
@@ -302,7 +277,7 @@ viewMgr.addView(parent, ExchangeConstants.type_standalone_handler);
 该样式内容是以Web形式，所以加载有一定延迟。后台可配置弹窗大小。
 
 ```
-ExchangeDataService es = new ExchangeDataService();
+ExchangeDataService es = new ExchangeDataService(“slot_id”);
 ExchangeViewManager vMgr = new ExchangeViewManager(mContext, es);
 FloatDialogConfig config = new FloatDialogConfig()//可选配置
     .setTimeout(3000)//设置弹窗超时不显示时间
