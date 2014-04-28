@@ -1,4 +1,38 @@
 # 友盟UFP Release Note
+
+##### 版本: v6.9.20140428
+##### 发布日期: 2014.04.28
+##### 更新：
+
+1.优化WebView,添加底部工具栏
+
+2.新增接口用于关闭推广打开的视窗
+* ExchangeViewManager.destroy()
+
+3.添加SDK渠道设置字段
+* ExchangeConstants.SDK_CHANNEL
+
+4.更新新版utdid，修复“android.permission.WRITE_SETTINGS”权限问题
+
+5.修复一些bug
+
+##### 版本: v6.7.140428(LiteSDK)
+##### 发布日期: 2014.04.28
+##### 更新：
+
+1.优化WebView,添加底部工具栏
+
+2.新增接口关闭webview
+* ExchangeViewManager.disBrowser()
+
+3.添加SDK渠道设置字段
+* ExchangeConstants.SDK_CHANNEL
+
+4.更新新版utdid
+
+5.精简SDK，删除冗余资源文件
+
+
 ##### 版本: v6.9.20140402
 ##### 发布日期: 2014.04.02 
 ##### 更新：
