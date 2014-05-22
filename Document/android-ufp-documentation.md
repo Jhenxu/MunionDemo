@@ -755,6 +755,45 @@ feedsManager.getProducts(mGlobalFeeds);//这里的feedsManager和步骤1中使�
 ```
 
 步骤3：将获取的Feed你设定的插入方式插入列表
+1.使用FeedViewFactory生成相应的View以便插入List中
+
+```
+View feedView = FeedViewFactory.getFeedView(activity, feed);
+```
+
+2.直接使用Feed中的推广数据定制UI
+
+```
+ List<Promoter> promoters = feed.getPromoters();//获取一个feed中包含的推广信息
+```
+
+Promoter 中字段含义
+
+| 字段变量      | 含义           | 
+| ------------- |:-------------:| 
+|promoter|广告的ID|
+|category|流量类型(0: 交换, 1:自主 ，2:付费推广)|
+|content_type|应用或网址(0:应用, 1: 网址)|
+|display_type|标准或图片(0:standard, 1: image，2：hyperlink text)|
+|img| Banner图或头图的URL|
+|image_type|插屏广告位，增加图片类型字段（img_type）, 取值为0（方图）， 1（长图）|
+|landing_type|(0: popup, 1:down, 2:webview, 3:browser,4:wap_view 91:goStore) 打开方式|
+|text_font|Hyperlink text 字体|
+|text_size|Hyperlink text 文字大小|
+|text_color|文字颜色|
+|title|名称|
+|provider|开发者|
+|ad_words|广告语|
+|description|描述|
+|icon|图标URL|
+|url|地址（apk下载地址或网址或app store下载地址）|
+|app_version_code|包的版本号 如136|
+|url_in_app|应用内地址，用于打开应用制定页面|
+|size|apk 大小|
+|app_package_name|APK的包名|
+|app_version_name|APK的版本名|
+|new_tip|是否新广告 1 表示新广告 0 非新广告(default)|
+
 
 注意：如果获取的Feed已经使用过，第二次进入想要复用之前使用过的Feed,需要调用cleanReportFlag
 
