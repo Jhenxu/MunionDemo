@@ -1,4 +1,12 @@
-# 友盟UFP Release Note
+# ANDROID SDK Release Note
+
+##### 版本: v6.7.20140604(LiteSDK)
+##### 发布日期: 2014.06.04
+##### 更新：
+
+1.添加对外Apv接口
+
+* exchagneViewMangager.reportApv
 
 ##### 版本: v6.9.20140428
 ##### 发布日期: 2014.04.28
