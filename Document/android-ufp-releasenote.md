@@ -1,7 +1,25 @@
+##### 版本: v6.9.5.20140523
+##### 发布日期: 2014.05.23
+##### 更新：
+
+1.优化WebView,添加底部工具栏
+
+2.新增接口用于关闭推广打开的视窗
+* ExchangeViewManager.destroy()
+
+3.添加SDK渠道设置字段
+* ExchangeConstants.SDK_CHANNEL
+
+4.更新新版utdid，修复“android.permission.WRITE_SETTINGS”权限问题
+
+5.修复一些bug
+
+6.增加性能优化feature，启用spdy协议代理电商墙图片请求，下载速率提升 20%，增加http-dns-1.2.0-20140308.034153.jar和spdnSDK-1.0.1-20140422.064108.jar两个jar包
+
 # 友盟UFP Release Note
 
-##### 版本: v6.9.20140428
-##### 发布日期: 2014.04.28
+##### 版本: v6.9.20140523
+##### 发布日期: 2014.05.23
 ##### 更新：
 
 1.优化WebView,添加底部工具栏
