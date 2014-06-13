@@ -11,48 +11,6 @@ UFP提供了App自主推广，广告管理，App间交叉推广等功能。
 
 ### 2. 建立广告位，获取Slot id
 
-* **登录** http://ufp.umeng.com 
-
-    <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/login.png"/></a></div><div style="clear:both"></div>
-
-* **登录后** 将看到您现有的广告位信息，如：
-    <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/slots.png"/></a></div><div style="clear:both"></div>
-
-* **新建广告位**，点击“添加广告位”, 选择新建的广告位类型，完成相关设置并保存
-
-    <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/create_slot.png"/></a></div><div style="clear:both"></div>
-
-* **获取slot id** (slot id是对广告位的唯一标识，在SDK中需要使用该字段获取对应的广告信息)点击广告位列表左上方的 “获取代码” 按钮，弹出如下信息，选择相关的广告位，点击获取代码，即可在弹框右侧看到对应的slot id
-
-    <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/check_slotid.png"/></a></div><div style="clear:both"></div>
-
-* **添加广告至广告位** 点击相关广告位右侧的 “展开广告” --> "添加广告" 完成相关设置并保存
-
-    <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/slots.png"/></a></div><div style="clear:both"></div>
-
-  <div style="float:left;width:100%;"><img src="http://dev.umeng.com/images/ios/create_ad.png"/></div><div style="clear:both"></div>
-  
-### <a name="open_taobao"></a>2.1 申请淘宝开放平台账号(自定义入口样式需要申请,不集成自定义入口可以跳过)
-
-* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，<a href="http://www.umeng.com/aboutus_contact">客服联系方式</a>
-
-* **登录** http://open.taobao.com/index.htm 
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_index.jpg"/></a></div><div style="clear:both"></div>
-  
-* **点击加入开放平台并登录** 登录后按照引导进行开发者认证，认证完成后，您将看到如下页面，点击创建应用
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_login.jpg"/></a></div><div style="clear:both"></div>  
-  
-* **创建应用** 填写应用名称 (应用标签必须选择无线营销)--> 申请开发测试，上传图片 --> 提交安全扫描 --> 等待对外发布
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_01.jpg"/></a></div><div style="clear:both"></div>  
-
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_02.jpg"/></a></div><div style="clear:both"></div>  
-
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_create_app_03.jpg"/></a></div><div style="clear:both"></div>
-
-* **Android应用认证** 申请完成后，按照下图，点击Android应用认证，填写758665872，保存
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_taobao_android_sign.jpg"/></a></div><div style="clear:both"></div>
-
-
 ## 3. SDK的集成
 
 ### 3.1 导入SDK 所需 jar包
@@ -344,6 +302,8 @@ MTOP_APPKEY为开放平台appkey
 MTOP_APP_SECRET为开放平台appsecret  
 MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
 
+<a href="#open_taobao" style="text-decoration:none">申请方式</a>
+
 appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
 
 <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
@@ -409,27 +369,6 @@ appkey和appsecret在开放平台中，应用设置-->应用证书中查看，�
         
     </RelativeLayout>
 ```
-   
-3.2静态图标
-
-在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
-
-```
-ExchangeConstants.MTOP_APPKEY = <appkey(开放平台appkey)>;
-ExchangeConstants.MTOP_APP_SECRET = <appsecret(开放平台appsecret)>;
-ExchangeConstants.MTOP_APP_SIGNATURE = <sign(android应用证书)>;
-ImageView imageview = (ImageView) findViewById(R.id.image_view_id);
-Drawable drawable = context.getResources().getDrawable(R.drawable.drawable_id);
-new ExchangeViewManager(context, new ExchangeDataService("slot_id"))
-            .addView(ExchangeConstants.type_list_curtain, imageview, drawable);            
-```
-
-MTOP_APPKEY为开放平台appkey  
-MTOP_APP_SECRET为开放平台appsecret  
-MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
-
-appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
-
 <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
 
 ### 4. 内嵌入口
@@ -957,6 +896,27 @@ exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
 ```
 > 混淆过程中遇到的问题,具体请见[这里](/faq/faq_diff_android.html?expand=1).
 
+### 6.其他
 
-## 技术支持
-请发邮件至<support@umeng.com>，我们会尽快回复您。 
+### <a name="open_taobao"></a>2.1 申请淘宝开放平台账号(自定义入口样式需要申请,不集成自定义入口可以跳过)
+
+* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，<a href="http://www.umeng.com/aboutus_contact">客服联系方式</a>
+
+* **登录** http://open.taobao.com/index.htm 
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_index.jpg"/></a></div><div style="clear:both"></div>
+  
+* **点击加入开放平台并登录** 登录后按照引导进行开发者认证，认证完成后，您将看到如下页面，点击创建应用
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_login.jpg"/></a></div><div style="clear:both"></div>  
+  
+* **创建应用** 填写应用名称 (应用标签必须选择无线营销)--> 申请开发测试，上传图片 --> 提交安全扫描 --> 等待对外发布
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_01.jpg"/></a></div><div style="clear:both"></div>  
+
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_02.jpg"/></a></div><div style="clear:both"></div>  
+
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_create_app_03.jpg"/></a></div><div style="clear:both"></div>
+
+* **Android应用认证** 申请完成后，按照下图，点击Android应用认证，填写758665872，保存
+  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_taobao_android_sign.jpg"/></a></div><div style="clear:both"></div>
+
+
+
