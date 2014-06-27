@@ -188,6 +188,7 @@ UFP提供了App自主推广，推广管理，App间交叉推广等功能。
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 </manifest>
 ```
 
