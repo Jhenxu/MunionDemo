@@ -13,7 +13,7 @@ UFP提供了App自主推广，推广管理，App间交叉推广等功能。
   
 ### <a name="open_taobao"></a>1.1 申请淘宝开放平台账号(自定义入口样式需要申请,不集成自定义入口可以跳过)
 
-* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，<a href="http://www.umeng.com/aboutus_contact">客服联系方式</a>
+* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，客服联系方式:<mobilesupport@list.alibaba-inc.com>
 
 * **登录** http://open.taobao.com/index.htm 
   <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_index.jpg"/></a></div><div style="clear:both"></div>
@@ -356,7 +356,8 @@ public class InterstitialActivity extends Activity {
 | 图6-1 banner推广 |
 
 ### 3. 自定义入口
-* 请联系我们的客服，将您的淘宝账号加入到我们的白名单中<a href="http://www.umeng.com/aboutus_contact">客服</a>
+* 请联系我们的客服，将您的淘宝账号加入到我们的白名单中
+* ，客服邮箱: <mobilesupport@list.alibaba-inc.com>
 
 * 确认使用上一步加入白名单的淘宝账号到<a href="http://open.taobao.com/index.htm">淘宝开放平台</a>申请加入，并创建应用，<a href="#open_taobao">点击查看创建流程</a> 
 
@@ -624,4 +625,4 @@ exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
 
 
 ## 技术支持
-请发邮件至<support@umeng.com>，我们会尽快回复您。 
+请发邮件至<mobilesupport@list.alibaba-inc.com>，我们会尽快回复您。 
