@@ -191,38 +191,6 @@ UFP提供了App自主推广，推广管理，App间交叉推广等功能。
 </manifest>
 ```
 
-### 2.6 显示推广应用
-
-在需要添加阿里妈妈推广的`Activity`的`onCreate()`函数中添加：
-
-```
-public class BannerExample extends Activity {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.banner_activity);      
-    // 找到一个添加banner 的父亲节点将 banner View附着到这个节点上
-    ViewGroup parent = (ViewGroup)this.findViewById(R.id.parent);      
-    /* 注意替换正确的 slot_id */
-        ExchangeDataService service = new ExchangeDataService("slot_id");
-        ExchangeViewManager viewMgr = new ExchangeViewManager(this, service);
-        viewMgr.addView(parent, ExchangeConstants.type_standalone_handler);
-    }
-}
-```
-
-下面的例子是对应于上面的BannerExample Activity的布局文件(banner_activity.xml)。
-
-```
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:background="@android:color/darker_gray"
-    android:id="@+id/parent">
-</RelativeLayout>
-```
-
 ## 3 选择显示样式
 
 下载面列出了SDK所支持的所有样式。
