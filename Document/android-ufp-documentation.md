@@ -1,13 +1,12 @@
-## **<center>Android UFP SDK使用指南</center>**
+## **<center>Android 推广 SDK使用指南</center>**
 
 ### 1. 简介： 
 * 服务简介:
-UFP提供了App自主推广，广告管理，App间交叉推广等功能。
+阿里妈妈推广SDK提供了商品推广，App自主推广，广告管理，App间交叉推广等功能。
 * SDK 简介：
-  * 提供 _**<font color='green'>8</font>**_ 种样式:  横幅(Banner), 列表(TableView), 文字链(TextLink), Wap(Webview), 小把手(Handle), 头图(HeadlineView), 弹框(Dialog), Icon列表(GridView)
+  * 提供 _**<font color='green'>8</font>**_ 种样式:  横幅,推广墙，内嵌墙，文字链，轮播大图，插屏，开屏，信息流
 
 ===
-
 
 ### 2. 建立广告位，获取Slot id
 
@@ -26,36 +25,36 @@ UFP提供了App自主推广，广告管理，App间交叉推广等功能。
 
 > **提示** 
 >
-> SDK提供的资源文件都以`umeng_`或`munion_`开头。
+> SDK提供的资源文件都以`taobao_`开头。
 
 
-### 3.3 添加渠道 (可选：UFP用户按渠道投放广告)
+### 3.3 添加渠道 (可选：用户按渠道投放广告)
 在`<application>`中添加
 
 ```
-<meta-data android:value="xxxxxxxx" android:name="UMENG_CHANNEL"></meta-data>
+<meta-data android:value="xxxxxxxx" android:name="MUNION_CHANNEL"></meta-data>
 ```
 
 ### 3.4 添加访问权限
 
 ```
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 ```
 
 ### 3.5 添加服务
 打开`AndroidManifest.xml`, 在`<application>`标签中声明SDK用到的下载服务:
 
-> 注意：com.umeng包名可能有变，如果不能下载，请检查包名，替换成正确的包名。
-
 ```
  <!-- 下载服务 -->
  <service
-     android:name="com.umeng.common.ufp.net.DownloadingService"
+     android:name="com.taobao.munion.base.download.DownloadingService"
      android:exported="true"
      android:process=":DownloadingService" >
  </service>
@@ -65,209 +64,104 @@ UFP提供了App自主推广，广告管理，App间交叉推广等功能。
 
 ```
  <!-- 应用详情页 -->
-  <activity
-            android:name="com.umeng.newxp.view.UMDetail"
-            android:configChanges="keyboard|orientation"
-            android:launchMode="standard" />
-```
-
-
-添加推广信息打开二跳墙功能，如果不添加出现二条推广点击将提示“无法打开页面”（需要android-support-v4.jar支持）
-
-
-```
-        <!-- 应用墙 -->
-        <activity
-            android:name="com.umeng.newxp.view.handler.umwall.UMWall"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 电商墙 -->
-        <activity
-            android:name="com.taobao.munion.ewall.EWallContainerActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 城市切换选择页，用于团购类页面 -->
-        <activity
-            android:name="com.umeng.newxp.view.UMCity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
-```
-
-
-
-下面是一个完整的`AndroidManifest.xml`文件的例子。
-
-```
- <?xml version="1.0" encoding="utf-8"?>
- <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.umeng.example"
-    android:versionCode="1"
-    android:versionName="1.0" >
-    <application
-        android:debuggable="true"
-        android:icon="@drawable/icon"
-        android:label="@string/app_name" >                
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Android market" />
-        <activity
-            android:name="com.umeng.newxp.view.UMDetail"
-            android:configChanges="keyboard|orientation"
-            android:launchMode="standard" />
-        <!-- 应用墙 -->
-        <activity
-            android:name="com.umeng.newxp.view.handler.umwall.UMWall"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 电商墙 -->
-        <activity
-            android:name="com.taobao.munion.ewall.EWallContainerActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 城市切换选择页，用于团购类页面 -->
-        <activity
-            android:name="com.umeng.newxp.view.UMCity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
-        <!-- 声明SDK用到的下载服务 -->
-        <service
-            android:name="com.umeng.common.ufp.net.DownloadingService"
-            android:exported="true"
-            android:process=":DownloadingService" >
-        </service>
-    </application>
-    <uses-sdk android:minSdkVersion="4" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-</manifest>
-```
-
-### 3.6 显示推广应用
-
-在需要添加友盟推广的`Activity`的`onCreate()`函数中添加：
-
-```
-public class BannerExample extends Activity {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.banner_activity);      
-    // 找到一个添加banner 的父亲节点将 banner View附着到这个节点上
-    ViewGroup parent = (ViewGroup)this.findViewById(R.id.parent);      
-    /* 注意替换正确的 slot_id */
-        ExchangeDataService service = new ExchangeDataService("slot_id");
-        ExchangeViewManager viewMgr = new ExchangeViewManager(this, service);
-        viewMgr.addView(parent, ExchangeConstants.type_standalone_handler);
-    }
-}
-```
-
-下面的例子是对应于上面的BannerExample Activity的布局文件(banner_activity.xml)。
-
-```
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:background="@android:color/darker_gray"
-    android:id="@+id/parent">
-</RelativeLayout>
+ <activity
+       android:name="com.taobao.newxp.view.UMDetail"
+       android:configChanges="keyboard|orientation"
+       android:launchMode="standard"
+       android:screenOrientation="portrait" />
 ```
 
 ## 4 选择显示样式
 
-下载面列出了友盟UFP SDK所支持的所有样式。
+下载面列出了SDK所支持的所有样式。
 
 ### 1. 横幅(banner)
+步骤1：在布局文件中添加Banner推广位
 
 ```
-ExchangeDataService service = new ExchangeDataService("slot_id");
-ExchangeViewManager viewMgr = new ExchangeViewManager(context, service);
-viewMgr.addView(parent, ExchangeConstants.type_standalone_handler);
+<com.taobao.munion.view.banner.MunionBannerView
+            android:id="@+id/bannerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 ```
 
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="http://dev.umeng.com/images/android/image001.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image002.png" width="300" height="400"> |
-| 图6-1 banner广告 | 图6-2 广告细节  |
-
-
-### 2. WAP页面
-
-2.1本地自定义入口图片
+步骤2：在代码中设置Banner的推广位ID
 
 ```
-Drawable drawable = context.getResources().getDrawable(R.drawable.drawable_id);
-new ExchangeViewManager(context, new ExchangeDataService("slot_id"))
-             .addView (ExchangeConstants.type_wap_style, imageview, drawable);
+public class BannerActivity extends Activity {
+    MunionBannerView bannerView;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.banner_example);
+
+        bannerView = (MunionBannerView) findViewById(R.id.bannerView);
+        bannerView.setMunionId("58320");//设置推广位ID
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+		//重新加载推广
+        if(bannerView != null){
+            bannerView.load();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //关闭推广
+        if(bannerView != null)
+            bannerView.close();
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean interrupt = false;
+        if (bannerView != null) {//通知Banner推广返回键按下，如果Banner进行了一些UI切换将返回true
+                                // 否则返回false(如从 expand状态切换会normal状态将返回true)
+            interrupt = bannerView.onBackPressed();
+        }
+
+        if (!interrupt)
+            super.onBackPressed();
+    }
+}
 ```
+|             |
+|:-----------:|
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/banner.png" width="260" height="400">   | 
+| 图6-1 banner推广 |
 
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="http://dev.umeng.com/images/android/image003.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image004.png" width="300" height="400"> |
-| 图7-1 WAP 广告   | 图7-2 广告展示  |
 
-2.2动态入口图片
 
-在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
-<br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片，否则将不显示
-
-```
-ImageView imageview = (ImageView) findViewById(R.id.image_view_id);
-new ExchangeViewManager(context, new ExchangeDataService("slot_id"))
-             .addView (ExchangeConstants.type_wap_style, imageview);
-```
-
-2.3直接弹出Wap页
-
-```
-new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(null, ExchangeConstants.type_cloud_full);
-```
-
-### 3. 自定义入口
+### 2. 推广墙
 * 请联系我们的客服，将您的淘宝账号加入到我们的白名单中<a href="http://www.umeng.com/aboutus_contact">客服</a>
-
-* 确认使用上一步加入白名单的淘宝账号到<a href="http://open.taobao.com/index.htm">淘宝开放平台</a>申请加入，并创建应用，<a href="#open_taobao">点击查看创建流程</a> 
 
 * 自定义入口已升级，需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
 
-* 确认注册了以下Activity,其中EwallContainerActivity 需要增加data标签,其中host="oauth.m.taobao.com" android:pathPattern="/callback*" 固定填写,android:scheme为btaobao开头，加之前注册开放平台并创建应用的appkey,如android:scheme="btaobao21736666"
 
 ```
+
         <!-- 应用墙 -->
         <activity
-            android:name="com.umeng.newxp.view.handler.umwall.UMWall"
+            android:name="com.taobao.newxp.view.handler.umwall.UMWall"
             android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 电商墙 -->
-        <activity
-            android:name="com.taobao.munion.ewall.EWallContainerActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:launchMode="singleTask"
-            android:exported="true"            
-            android:theme="@style/StyledIndicators">
-            
-            <data
-                    android:host="oauth.m.taobao.com"
-                    android:pathPattern="/callback*"
-                    android:scheme="btaobao21736666" />
-                    
-        </activity>
-        <!-- 城市切换选择页，用于团购类页面 -->
+            android:screenOrientation="portrait"
+            android:theme="@style/DefaultStyledIndicators" />
+
+        <!-- 电商推广墙 -->
         <activity
-            android:name="com.umeng.newxp.view.UMCity"
+            android:name="com.taobao.newxp.view.handler.umwall.TaobaoWall"
             android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/TaobaoStyledIndicators" />       
 ```
 * 电商墙效果
 
@@ -284,29 +178,18 @@ new ExchangeViewManager(context, new ExchangeDataService("slot_id")).addView(nul
 | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall02.png" width="250" height="400"> |
 |  图8-1 精品推荐样式1   | 图8-2 精品推荐样式2  |
 
-3.1动态图标
+3.1添加入口
 
 在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
 <br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片，否则将不显示
 
 ```
-ExchangeConstants.MTOP_APPKEY = <appkey(开放平台appkey)>;
-ExchangeConstants.MTOP_APP_SECRET = <appsecret(开放平台appsecret)>;
-ExchangeConstants.MTOP_APP_SIGNATURE = <sign(android应用证书)>;
-View imageview = findViewById(R.id.rlayout1);
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+View view = findViewById(R.id.rlayout1);
 new ExchangeViewManager(context, new ExchangeDataService(slot_id))
-                 .addView(ExchangeConstants.type_list_curtain, imageview);
+                 .addView(ExchangeConstants.type_list_curtain, view);
 ```
 
-MTOP_APPKEY为开放平台appkey  
-MTOP_APP_SECRET为开放平台appsecret  
-MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
-
-<a href="#open_taobao" style="text-decoration:none">申请方式</a>
-
-appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
-
-<div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
 
 1.在需要添加入口的布局文件中添加如下布局信息
 
@@ -366,16 +249,15 @@ appkey和appsecret在开放平台中，应用设置-->应用证书中查看，�
                 android:textSize="8sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-        
     </RelativeLayout>
 ```
-<div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
 
-### 4. 内嵌入口
+### 3. 内嵌入口
 
 集成方式：
 
 ```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 ViewGroup fatherLayout = (ViewGroup) this.findViewById(R.id.ad);
 ListView listView = (ListView) this.findViewById(R.id.list);
 ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this,new ExchangeDataService("slot_id"));
@@ -409,7 +291,8 @@ exchangeViewManager.addView(fatherLayout, listView);
 入口Activity中：
 
 ```
-preloadDataService = new ExchangeDataService("40251");
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+preloadDataService = new ExchangeDataService("slot_id");
 preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
     @Override
     public void onChanged(int flag) {
@@ -425,11 +308,12 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 | <img src="http://dev.umeng.com/images/android/image007.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image008.png" width="300" height="400"> |
 | 图9-1 获取广告中  | 图9-2 广告展示  |
 
-### 5. 文字链
+### 4. 文字链
 
 在需要展示文字链的Activity 样式文件添加一个RelativeLayout 作为rootView 文字链长度填充rootView,高度将按照文字指定大小显示。
 
 ```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 ExchangeViewManager exchangeViewManager =
 new ExchangeViewManager(context, new ExchangeDataService(soltId));
 exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banner);
@@ -441,9 +325,10 @@ exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banne
 exchangeViewManager-.setLoopInterval(time);
 ```
 
-### 6. 轮播大图
+### 5. 轮播大图
 
 ```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 //自定义一个 RelativeLayout 实例
 ViewGroup parent = 实例;
 ExchangeDataService service = new ExchangeDataService("slot_id");
@@ -456,84 +341,79 @@ viewMgr.addView(parent, ExchangeConstants.type_large_image);
 | <img src="http://dev.umeng.com/images/android/image009.png" width="250" height="400">   | <img src="http://dev.umeng.com/images/android/image010.png" width="250" height="400"> |
 | 图10-1 获取广告中  | 图10-2 广告展示  |
 
-### 7. Push弹窗
-该样式内容是以Web形式，所以加载有一定延迟。后台可配置弹窗大小。
+### 6.插屏
+
+步骤1：在布局文件中添加插屏推广位
 
 ```
-ExchangeDataService es = new ExchangeDataService("slot_id");
-ExchangeViewManager vMgr = new ExchangeViewManager(mContext, es);
-FloatDialogConfig config = new FloatDialogConfig//可选配置
-    .setTimeout(3000)//设置弹窗超时不显示时间
-    .setDelay(true)//设置窗口网页加载到一定进度再弹出(setDelayProgress)
-    //.setListener(pushListener)//设置Push周期回调
-    .setDelayProgress(30);//设置窗口延迟弹出进度
-            
-vMgr.setFeatureConfig(config);
-vMgr.addView(null, ExchangeConstants.type_float_dialog);
+//添加到全屏的ViewGroup中
+<com.taobao.munion.view.interstitial.MunionInterstitialView
+        android:id="@+id/interstitialView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone" />
 ```
 
-回调设置
+步骤2：在代码中设置
 
 ```
-FloatDialogListener pushListener = new XpListenersCenter.FloatDialogListener() {
-            /**
-             * 开始加载广告
-             */
-            @Override
-            public void onStart() {
-                Log.d("TestData", "onStart");
-            }
+public class InterstitialActivity extends Activity {
+	private MunionInterstitialView interstitialView;
 
-            /**
-             * 获取广告准备渲染 0 failed 1 successed
-             *
-             * @param status
-             */
-            @Override
-            public void onPrepared(int status) {
-                Log.d("TestData", "onPrepared " + status);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.interstitial);
 
-            }
+		interstitialView = (MunionInterstitialView) findViewById(R.id.interstitialView);
+		interstitialView.load(MainActivity.INSET_ID);//加载插屏推广
 
-            /**
-             * 显示窗口
-             * @param isTimeout 是否超时 超时将不显示
-             */
-            @Override
-            public void onShow(boolean isTimeout) {
-                Log.d("TestData", "onShow  " + isTimeout);
-            }
-
-            /**
-             * 隐藏窗口
-             */
-            @Override
-            public void onClose() {
-                Log.d("TestData", "onClose  ");
-            }
-
-            /**
-             * 推广信息被点击
-             */
-            @Override
-            public void onClick() {
-                Log.d("TestData", "onClick  ");
-            }
-
-        };
-```
-
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/popup01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/popup02.png" width="250" height="400"> |
-| 图11-1 60%窗口  | 图11-2 全屏  |
-
-
-### 8.开屏样式
+		interstitialView
+				.setOnStateChangeCallBackListener(new OnStateChangeCallBackListener() {
+					@Override
+					public void onStateChanged(InterstitialState state) {
+						switch (state) {
+						case CLOSE:
+							//关闭推广
+							break;
+						case READY:
+							//仅当第一次加载完推广的时候回调
+							interstitialView.show();
+							break;
+						default:
+							break;
+						}
+					}
+				});
+	}
+	
+	protected void onResume(){
+		super.onResume();
+		if(interstitialView != null){
+			interstitialView.show();
+		}
+	}
+	
+	protected void onPause(){
+		super.onPause();
+		if(interstitialView != null){
+			interstitialView.close();
+		}
+	}
+}
 
 ```
+|             |
+|:-----------:|
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float.png" width="260" height="400">   | 
+| 图6-1 banner推广 |
+
+### 7.开屏样式
+
+```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
     /**
-        * Umeng 开屏样式集成：
+        * 开屏样式集成：
         * 
         * WelcomeAdsListener：无论是否展示都会调用onFinish
         *      
@@ -589,79 +469,11 @@ FloatDialogListener pushListener = new XpListenersCenter.FloatDialogListener() {
 其他设置
 
 * ExchangeConstants.WELCOME_COUNTDOWN = true;//设置是否显示开屏样式倒计时
-* 设置开屏样式动画 'umeng_xp_cm_style.xml/umeng_xp_welcome_dialog_animation'
-* 设置开屏样式窗口样式'umeng_xp_cm_style.xml/umeng_xp_welcome_dialog_style'
+* 设置开屏样式动画 'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_animation'
+* 设置开屏样式窗口样式'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_style'
 
-### 9.积分墙
 
-* 集成方式
-在AndroidManifest.xml添加Activity
-
-```
-<activity
-            android:name="com.umeng.newxp.view.UMCity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
-```
-
-代码中添加
-
-```
-ExchangeDataService mExchangeDataService = new ExchangeDataService("52465");
-mExchangeDataService.setCreditUID("umeng_test");// 设置用户唯一标识（必填）
-final ExchangeViewManager exchangeViewManager = new ExchangeViewManager(
-        CreditWallExample.this,
-        mExchangeDataService);
-
-root.findViewById(R.id.entrance).setOnClickListener(new OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        exchangeViewManager.addView(ExchangeConstants.type_credits_wall, null);
-    }
-});
-
-```
-
-* 积分墙效果
-
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/creditwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/creditwall02.png" width="250" height="400"> |
-|  图8-1 积分墙样式1   | 图8-2 积分墙样式2  |
-
-* 积分接口
-
-```
-// =================积分查询===========================
-
-        mExchangeDataService.queryCredits(new UMCreditQueryListener() {
-            @Override
-            public void onComplete(int status,int credits, String data) {
-                // status -1 网络异常或服务器异常 0：失败 1：成功
-                // credits 当前积分 
-                // data 原始json数据
-                Toast.makeText(getActivity(), status+"   当前积分：" + credits, 1).show();
-            }
-
-        });
-
-// =================积分消费===========================
-
-        // 100 消费100积分
-        mExchangeDataService.consumeCredit(100, new UMCreditListener() {
-            @Override
-            public void onComplete(int status, String data) {
-                // status -1 网络异常或服务器异常 0：失败 1：成功
-                // data 原始json数据
-                if(1 == status)
-                    Toast.makeText(getActivity(), "成功消费100积分", 1).show();
-                else
-                    Toast.makeText(getActivity(), "发生错误："+status, 1).show();
-            }
-        });
-```
-
-### 10.信息流
+### 8.信息流
 
 * 集成方式
 
@@ -670,6 +482,7 @@ root.findViewById(R.id.entrance).setOnClickListener(new OnClickListener() {
 步骤1：在列表页前初始化Feed信息，没有初始化完成的Feed将无法使用
 
 ```
+			AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
             FeedsManager feedsManager = new FeedsManager(getActivity());
             String slot = "46660";
             feedsManager.addMaterial(slot,slot);
@@ -750,105 +563,22 @@ Demo中给出了一个信息流样式集成的使用场景，初始化过程在X
 | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed02.png" width="250" height="400"> |
 |  图8-1 信息流样式1   | 图8-2 信息流样式2  |
 
-* 积分接口
-
-```
-// =================积分查询===========================
-
-        mExchangeDataService.queryCredits(new UMCreditQueryListener() {
-            @Override
-            public void onComplete(int status,int credits, String data) {
-                // status -1 网络异常或服务器异常 0：失败 1：成功
-                // credits 当前积分 
-                // data 原始json数据
-                Toast.makeText(getActivity(), status+"   当前积分：" + credits, 1).show();
-            }
-
-        });
-
-// =================积分消费===========================
-
-        // 100 消费100积分
-        mExchangeDataService.consumeCredit(100, new UMCreditListener() {
-            @Override
-            public void onComplete(int status, String data) {
-                // status -1 网络异常或服务器异常 0：失败 1：成功
-                // data 原始json数据
-                if(1 == status)
-                    Toast.makeText(getActivity(), "成功消费100积分", 1).show();
-                else
-                    Toast.makeText(getActivity(), "发生错误："+status, 1).show();
-            }
-        });
-```
-
-
-
-
 
 
 ## 备注
 
-### 1. 在非中文手机上，默认不展示推广内容。
-如果想在非中文手机上显示推广内容， 在请求数据之前将ExchangeConstants.ONLY_CHINESE设置为false。
-
-```
-public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.splash_activity);
-        ExchangeConstants.ONLY_CHINESE=false;
-        ViewGroup fatherLayout1 = (ViewGroup) this.findViewById(R.id.tab1);
-        ListView listView1 = (ListView) this.findViewById(R.id.list1);
-        new ExchangeViewManager().addView(this, fatherLayout1, listView1);
-}       
-```
-
-### 2. 可以通过设置下面的变量改变SDK默认的界面或者行为
+### 1. 可以通过设置下面的变量改变SDK默认的界面或者行为
 
 >* ExchangeConstants.full_screen: 显示全屏推荐时是否隐藏系统工具栏
 >* ExchangeConstants.blur_switcher: 弹出窗口后是否使用阴影遮挡其他部分
 >* ExchangeConstants.ONLY_CHINESE: 是否在非中文环境下展示，默认关闭
 >* ExchangeConstants.banner_alpha：如果使用standAlone模式，可设置banner的透明度
 >* ExchangeConstants.TIPS_DOWNLOAD：如果使用全屏样式对notification不可见，可设置该字段下载完成会有Toast提示。
->* ExchangeConstants.PRELOAD_REPEAT_COUNT：可设置加载的广告复用次数，默认值 1（如小把手进入后退出再进入会复用上一次加载的广告）
->* 如果想要修改默认的列表元素显示样式， 可以修改文件
-对于嵌入式List： exchange_container_banner.xml. 
-对于置顶/底下把手：exchange_normal_banner.xml
 
 注意:不要改变这两个文件里面元素的id， 但是可以改变他们的属性， 比如，android:visible, 字体颜色，大小等。
 
->* 如果想在Logcat里面打印log: <br>
-&nbsp;&nbsp;&nbsp;  com.umeng.common.ufp.Log.LOG = true; <br>
-&nbsp;&nbsp;&nbsp;  ExchangeConstants.DEBUG_MODE=true;
 
-### 3. 其他接口功能介绍
-
-#### 1.Exchange.initializeListener 数据初始化回调接口
-
-推广数据加载回调，可用来判断推广信息是否加载成功
-
-使用方法：
-
-```
-exDataService = ...
-
-exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
-            @Override
-            public void onStartRequestData(int type) {
-            	//开始加载推广信息，type:广告位类型
-            }
-
-            @Override
-            public void onReceived(int count) {
-            	//count:成功加载推广信息的数量
-            }
-        };
-        
-```
-
-
-### 4. 权限说明
+### 2. 权限说明
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tbody><tr>
@@ -867,26 +597,22 @@ exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
   </tr>
   <tr>
     <td>android.permission.READ_PHONE_STATE</td>
-    <td>检测网络状态，友盟SDK 1.6版本新增权限。</td>
+    <td>检测网络状态</td>
   </tr>
 
   <tr>
     <td>android.permission.WRITE_EXTERNAL_STORAGE</td>
-    <td>如果您使用了友盟自动更新提醒功能，需添加这个权限，为了将更新的APK临时存在SD卡里。</td>
+    <td>将更新的APK临时存在SD卡里。</td>
   </tr>
 </tbody></table>
 
 
-### 5. 混淆
+### 3. 混淆
 
 ```
--dontwarn com.umeng.**
-
 -dontwarn android.taobao.**
-
 -dontwarn com.taobao.**
 
--keep class com.umeng.** {*;}
 -keep class com.taobao.** {*; }
 -keep class android.taobao.** {*; }
 
@@ -894,29 +620,10 @@ exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
     *;
 }
 ```
-> 混淆过程中遇到的问题,具体请见[这里](/faq/faq_diff_android.html?expand=1).
 
-### 6.其他
+## 技术支持
+请发邮件至<mobilesupport@list.alibaba-inc.com>，我们会尽快回复您。 
 
-### <a name="open_taobao"></a>2.1 申请淘宝开放平台账号(自定义入口样式需要申请,不集成自定义入口可以跳过)
-
-* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，<a href="http://www.umeng.com/aboutus_contact">客服联系方式</a>
-
-* **登录** http://open.taobao.com/index.htm 
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_index.jpg"/></a></div><div style="clear:both"></div>
-  
-* **点击加入开放平台并登录** 登录后按照引导进行开发者认证，认证完成后，您将看到如下页面，点击创建应用
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_login.jpg"/></a></div><div style="clear:both"></div>  
-  
-* **创建应用** 填写应用名称 (应用标签必须选择无线营销)--> 申请开发测试，上传图片 --> 提交安全扫描 --> 等待对外发布
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_01.jpg"/></a></div><div style="clear:both"></div>  
-
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_02.jpg"/></a></div><div style="clear:both"></div>  
-
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_create_app_03.jpg"/></a></div><div style="clear:both"></div>
-
-* **Android应用认证** 申请完成后，按照下图，点击Android应用认证，填写758665872，保存
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_taobao_android_sign.jpg"/></a></div><div style="clear:both"></div>
 
 
 
