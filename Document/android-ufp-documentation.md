@@ -132,7 +132,7 @@ public class BannerActivity extends Activity {
 ```
 |             |
 |:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/banner.png" width="260" height="400">   | 
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/banner2.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
 ### 2.插屏
@@ -199,7 +199,7 @@ public class InterstitialActivity extends Activity {
 ```
 |             |
 |:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float.png" width="260" height="400">   | 
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float2.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
 
@@ -372,7 +372,7 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container02.png" width="300" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_02.png" width="300" height="400"> |
 | 图9-1 推广展示  | 图9-2 推广展示  |
 
 ### 5. 文字链
