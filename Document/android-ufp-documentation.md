@@ -8,7 +8,7 @@
 
 ===
 
-### 2. 建立广告位，获取Slot id
+### 2. 建立推广位，获推广位ID
 
 ### 3. SDK的集成
 
@@ -28,7 +28,7 @@
 > SDK提供的资源文件都以`taobao_`开头。
 
 
-### 3.3 添加渠道 (可选：用户按渠道投放广告)
+### 3.3 添加渠道 (可选：用户按渠道进行推广)
 在`<application>`中添加
 
 ```
@@ -71,7 +71,7 @@
        android:screenOrientation="portrait" />
 ```
 
-## 4 选择显示样式
+## 4 选择推广样式
 
 下载面列出了SDK所支持的所有样式。
 
@@ -290,7 +290,7 @@ new ExchangeViewManager(context, new ExchangeDataService(slot_id))
             android:textSize="12sp"
             android:textColor="#000"/>
 
-        <!-- 新广告提示布局 -->
+        <!-- 新推广提示布局 -->
        <RelativeLayout
             android:id="@+id/newtip_area"
             android:layout_width="28dp"
@@ -352,7 +352,7 @@ exchangeViewManager.addView(fatherLayout, listView);
  </RelativeLayout>    
 ```
 
-添加新广告提示
+添加新推广提示
 
 1.在入口处预加载物料。
 入口Activity中：
@@ -373,7 +373,7 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
 | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container02.png" width="300" height="400"> |
-| 图9-1 广告展示  | 图9-2 广告展示  |
+| 图9-1 推广展示  | 图9-2 推广展示  |
 
 ### 5. 文字链
 
@@ -406,10 +406,10 @@ viewMgr.addView(parent, ExchangeConstants.type_large_image);
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
 | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_02.png" width="250" height="400"> |
-| 图10-1 获取广告中  | 图10-2 广告展示  |
+| 图10-1 推广展示  | 图10-2 推广展示  |
 
 
-### 7.开屏样式
+### 7.开屏
 
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
@@ -421,8 +421,8 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
         *  超时或请求数据完毕
         *          |
         * onDataReviced
-        *          |-没有广告-onFinish
-        *       有广告   
+        *          |-没有推广-onFinish
+        *       有推广   
         *          |
         *       onShow
         *          |-发生错误-onError
@@ -431,7 +431,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
         *         |
         *      onFinish  
         *      
-        *  如果在广告加载期间启动页已经关闭，将不会回调。
+        *  如果在推广加载期间启动页已经关闭，将不会回调。
         *          
         */      
         new ExchangeViewManager(this).addWelcomeAds("44751", new WelcomeAdsListener() {
@@ -459,13 +459,13 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
             public void onError(String msg) {
                 System.out.println("onError " + msg);
             }
-        } , 1000, 3000);//广告将在调用addview 1000~3000 内展示，如果该时间段内没有接收到广告数据将调用onFinish
+        } , 1000, 3000);//推广将在调用addview 1000~3000 内展示，如果该时间段内没有接收到推广数据将调用onFinish
 ```
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
 | <img src="http://dev.umeng.com/images/android/image100.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image101.png" width="300" height="400"> |
-| 图10-1 启动页  | 图10-2 广告展示  |
+| 图10-1 启动页  | 图10-2 推广展示  |
 
 其他设置
 
@@ -478,7 +478,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 
 * 集成方式
 
-开发者需要创建一个或多个广告位，每个广告位对应一个feed
+开发者需要创建一个或多个推广位，每个推广位对应一个feed
 
 步骤1：在列表页前初始化Feed信息，没有初始化完成的Feed将无法使用
 
@@ -489,7 +489,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
             feedsManager.addMaterial(slot,slot);
             slot = "46658";
             feedsManager.addMaterial(slot,slot);
-            feedsManager.incubate(); //开始孵化feed广告
+            feedsManager.incubate(); //开始孵化feed推广
             feedsManager.setIncubatedListener(new IncubatedListener() {                
                 @Override
                 public void onComplete(int status, Feed feed, Object tag) {
@@ -524,19 +524,19 @@ Promoter 中字段含义
 
 | 字段变量      | 含义           | 
 | ------------- |:-------------:| 
-|promoter|广告的ID|
+|promoter|推广的ID|
 |category|流量类型(0: 交换, 1:自主 ，2:付费推广)|
 |content_type|应用或网址(0:应用, 1: 网址)|
 |display_type|标准或图片(0:standard, 1: image，2：hyperlink text)|
 |img| Banner图或头图的URL|
-|image_type|插屏广告位，增加图片类型字段（img_type）, 取值为0（方图）， 1（长图）|
+|image_type|插屏推广位，增加图片类型字段（img_type）, 取值为0（方图）， 1（长图）|
 |landing_type|(0: popup, 1:down, 2:webview, 3:browser,4:wap_view 91:goStore) 打开方式|
 |text_font|Hyperlink text 字体|
 |text_size|Hyperlink text 文字大小|
 |text_color|文字颜色|
 |title|名称|
 |provider|开发者|
-|ad_words|广告语|
+|ad_words|推广语|
 |description|描述|
 |icon|图标URL|
 |url|地址（apk下载地址或网址或app store下载地址）|
@@ -545,7 +545,7 @@ Promoter 中字段含义
 |size|apk 大小|
 |app_package_name|APK的包名|
 |app_version_name|APK的版本名|
-|new_tip|是否新广告 1 表示新广告 0 非新广告(default)|
+|new_tip|是否新推广 1 表示新推广 0 非新推广(default)|
 
 
 注意：如果获取的Feed已经使用过，第二次进入想要复用之前使用过的Feed,需要调用cleanReportFlag
