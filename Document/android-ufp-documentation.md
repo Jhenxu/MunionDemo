@@ -10,7 +10,7 @@
 
 ### 2. 建立广告位，获取Slot id
 
-## 3. SDK的集成
+### 3. SDK的集成
 
 ### 3.1 导入SDK 所需 jar包
 下载最新版SDK的zip包，将其中的jar包解压到本地工程`libs`子目录下。
@@ -135,12 +135,79 @@ public class BannerActivity extends Activity {
 | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/banner.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
+### 2.插屏
+
+步骤1：在布局文件中添加插屏推广位
+
+```
+//添加到全屏的ViewGroup中
+<com.taobao.munion.view.interstitial.MunionInterstitialView
+        android:id="@+id/interstitialView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone" />
+```
+
+步骤2：在代码中设置
+
+```
+public class InterstitialActivity extends Activity {
+	private MunionInterstitialView interstitialView;
+
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.interstitial);
+
+		interstitialView = (MunionInterstitialView) findViewById(R.id.interstitialView);
+		interstitialView.load(MainActivity.INSET_ID);//加载插屏推广
+
+		interstitialView
+				.setOnStateChangeCallBackListener(new OnStateChangeCallBackListener() {
+					@Override
+					public void onStateChanged(InterstitialState state) {
+						switch (state) {
+						case CLOSE:
+							//关闭推广
+							break;
+						case READY:
+							//仅当第一次加载完推广的时候回调
+							interstitialView.show();
+							break;
+						default:
+							break;
+						}
+					}
+				});
+	}
+	
+	protected void onResume(){
+		super.onResume();
+		if(interstitialView != null){
+			interstitialView.show();
+		}
+	}
+	
+	protected void onPause(){
+		super.onPause();
+		if(interstitialView != null){
+			interstitialView.close();
+		}
+	}
+}
+
+```
+|             |
+|:-----------:|
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float.png" width="260" height="400">   | 
+| 图6-1 banner推广 |
 
 
-### 2. 推广墙
+
+### 3. 推广墙
 * 请联系我们的客服，将您的淘宝账号加入到我们的白名单中<a href="http://www.umeng.com/aboutus_contact">客服</a>
 
-* 自定义入口已升级，需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
+* 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
 
 
 ```
@@ -180,7 +247,7 @@ public class BannerActivity extends Activity {
 
 3.1添加入口
 
-在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
+在需要展示推广墙的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
 <br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片，否则将不显示
 
 ```
@@ -252,7 +319,7 @@ new ExchangeViewManager(context, new ExchangeDataService(slot_id))
     </RelativeLayout>
 ```
 
-### 3. 内嵌入口
+### 4. 内嵌入口
 
 集成方式：
 
@@ -305,10 +372,10 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="http://dev.umeng.com/images/android/image007.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image008.png" width="300" height="400"> |
-| 图9-1 获取广告中  | 图9-2 广告展示  |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container02.png" width="300" height="400"> |
+| 图9-1 广告展示  | 图9-2 广告展示  |
 
-### 4. 文字链
+### 5. 文字链
 
 在需要展示文字链的Activity 样式文件添加一个RelativeLayout 作为rootView 文字链长度填充rootView,高度将按照文字指定大小显示。
 
@@ -325,7 +392,7 @@ exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banne
 exchangeViewManager-.setLoopInterval(time);
 ```
 
-### 5. 轮播大图
+### 6. 轮播大图
 
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
@@ -338,75 +405,9 @@ viewMgr.addView(parent, ExchangeConstants.type_large_image);
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="http://dev.umeng.com/images/android/image009.png" width="250" height="400">   | <img src="http://dev.umeng.com/images/android/image010.png" width="250" height="400"> |
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_02.png" width="250" height="400"> |
 | 图10-1 获取广告中  | 图10-2 广告展示  |
 
-### 6.插屏
-
-步骤1：在布局文件中添加插屏推广位
-
-```
-//添加到全屏的ViewGroup中
-<com.taobao.munion.view.interstitial.MunionInterstitialView
-        android:id="@+id/interstitialView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:visibility="gone" />
-```
-
-步骤2：在代码中设置
-
-```
-public class InterstitialActivity extends Activity {
-	private MunionInterstitialView interstitialView;
-
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.interstitial);
-
-		interstitialView = (MunionInterstitialView) findViewById(R.id.interstitialView);
-		interstitialView.load(MainActivity.INSET_ID);//加载插屏推广
-
-		interstitialView
-				.setOnStateChangeCallBackListener(new OnStateChangeCallBackListener() {
-					@Override
-					public void onStateChanged(InterstitialState state) {
-						switch (state) {
-						case CLOSE:
-							//关闭推广
-							break;
-						case READY:
-							//仅当第一次加载完推广的时候回调
-							interstitialView.show();
-							break;
-						default:
-							break;
-						}
-					}
-				});
-	}
-	
-	protected void onResume(){
-		super.onResume();
-		if(interstitialView != null){
-			interstitialView.show();
-		}
-	}
-	
-	protected void onPause(){
-		super.onPause();
-		if(interstitialView != null){
-			interstitialView.close();
-		}
-	}
-}
-
-```
-|             |
-|:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float.png" width="260" height="400">   | 
-| 图6-1 banner推广 |
 
 ### 7.开屏样式
 
