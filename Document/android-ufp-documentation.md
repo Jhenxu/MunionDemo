@@ -6,14 +6,14 @@
 * SDK 简介：
   * 提供 _**<font color='green'>8</font>**_ 种样式:  横幅，推广墙（自定义入口），内嵌墙，文字链，轮播大图，插屏，开屏，信息流
 
-===
+---
 
 ### 2. 建立推广位，获推广位ID
 从下载SDK的网站申请推广位ID，应用中的每一个广告位都需要一个推广位ID。
 
 ### 3. SDK的集成
 
-### 3.1 导入SDK 所需 jar包
+#### 3.1 导入SDK 所需 jar包
 下载最新版SDK的zip包，将其中的jar包解压到本地工程`libs`子目录下。
 > `Eclipse`用户右键工程根目录，选择`Properties -> Java Build Path -> Libraries`，然后点击`Add External JARs...` 选择指向jar的路径，点击`OK`，即导入成功。
 
@@ -21,7 +21,7 @@
 >
 > Eclipse ADT 17 以上版本用户，请在工程目录下建一个文件夹`libs`，把jar包直接拷贝到这个文件夹下，再在Eclipse里面刷新一下工程。不要通过上述步骤手动添加jar包引用。 详情请参考[Dealing with dependencies in Android projects](http://tools.android.com/recent/dealingwithdependenciesinandroidprojects).
 
-### 3.2 添加资源文件
+#### 3.2 添加资源文件
 若下载的SDK中包含`res`文件夹，将`res`文件夹拷入工程目录下, 和工程本身`res`目录合并。 
 
 > **提示** 
@@ -29,14 +29,14 @@
 > SDK提供的资源文件都以`taobao_`开头。
 
 
-### 3.3 添加渠道 (可选：用户按渠道进行推广)
+#### 3.3 添加渠道 (可选：用户按渠道进行推广)
 在`<application>`中添加
 
 ```
 <meta-data android:value="xxxxxxxx" android:name="MUNION_CHANNEL"></meta-data>
 ```
 
-### 3.4 添加访问权限
+#### 3.4 添加访问权限
 <center>alimama_demo\AndroidManifest.xml</center>
 ```
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -49,7 +49,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-### 3.5 添加服务
+#### 3.5 添加服务
 打开`AndroidManifest.xml`, 在`<application>`标签中声明SDK用到的下载服务:
 <center>alimama_demo\AndroidManifest.xml</center>
 ```
@@ -71,11 +71,11 @@
        android:screenOrientation="portrait" />
 ```
 
-## 4 选择推广样式
+### 4 选择推广样式
 
 下载面列出了SDK所支持的所有样式。
 
-### 1. 横幅(banner)
+#### 1. 横幅(banner)
 步骤1：在布局文件中添加Banner推广位
 <center>alimama_demo\res\layout\banner_example.xml</center>
 ```
@@ -133,10 +133,10 @@ public class BannerActivity extends Activity {
 ```
 |             |
 |:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/banner2.png" width="260" height="400">   | 
+| <img src="http://gtms01.alicdn.com/tps/i1/TB16TjiFVXXXXavXpXXlbwZHpXX-246-399.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
-### 2.插屏
+#### 2.插屏
 
 步骤1：在布局文件中添加插屏推广位
 <center>alimama_demo\res\layout\interstitial.xml</center>
@@ -197,17 +197,17 @@ public class InterstitialActivity extends Activity {
 ```
 |             |
 |:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float2.png" width="260" height="400">   | 
+| <img src="http://gtms01.alicdn.com/tps/i1/TB1vVvjFVXXXXaVXpXX1NcSHpXX-246-401.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
 
 
-### 3. 推广墙
+#### 3. 推广墙
 * 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
 
 <center>alimama_demo\AndroidManifest.xml</center>
 ```
-
+		<!-- 集成推广墙样式必须配置以下Activity-->
         <!-- 应用墙 -->
         <activity
             android:name="com.taobao.newxp.view.handler.umwall.UMWall"
@@ -230,7 +230,7 @@ public class InterstitialActivity extends Activity {
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall02.png" width="250" height="400"> |
+| <img src="http://gtms02.alicdn.com/tps/i2/TB1RtTjFVXXXXXkXpXXHBNITXXX-200-356.png" width="250" height="400">   | <img src="http://gtms04.alicdn.com/tps/i4/TB1cq6nFVXXXXacXXXXHBNITXXX-200-356.png" width="250" height="400"> |
 |  图8-1 电商墙样式   | 图8-2 电商墙搜索  |
 
 
@@ -238,7 +238,7 @@ public class InterstitialActivity extends Activity {
 
 |                         |                                 |
 |:------------------------:|:------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall02.png" width="250" height="400"> |
+| <img src="http://gtms03.alicdn.com/tps/i3/TB1m56dFVXXXXbAXVXXA0gJJXXX-720-1280.png" width="250" height="400">   | <img src="http://gtms04.alicdn.com/tps/i4/TB1uOR3FVXXXXbfapXXcJdn0pXX-576-1024.png" width="250" height="400"> |
 |  图8-1 精品推荐样式1   | 图8-2 精品推荐样式2  |
 
 3.1添加入口
@@ -316,7 +316,7 @@ new ExchangeViewManager(context, new ExchangeDataService(slot_id))
 ```
 
 
-### 4.信息流
+#### 4.信息流
 
 * 集成方式
 
@@ -403,11 +403,11 @@ Demo中给出了一个信息流样式集成的使用场景，初始化过程在X
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed02.png" width="250" height="400"> |
+| <img src="http://gtms03.alicdn.com/tps/i3/TB1s__jFVXXXXcaXXXXA0gJJXXX-720-1280.png" width="250" height="400">   | <img src="http://gtms04.alicdn.com/tps/i4/TB1ysneFVXXXXbVXVXXA0gJJXXX-720-1280.png" width="250" height="400"> |
 |  图8-1 信息流样式1   | 图8-2 信息流样式2  |
 
 
-### 5. 内嵌入口
+#### 5. 内嵌入口
 
 集成方式：
 <center>alimama_demo\src\com\taobao\example\xp\fragments\ContainerExampleFragment.java</center>
@@ -459,10 +459,10 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_02.png" width="300" height="400"> |
+| <img src="http://gtms02.alicdn.com/tps/i2/TB1Ar2dFVXXXXbSXFXXt4Rd7VXX-768-1280.png" width="300" height="400">   | <img src="http://gtms03.alicdn.com/tps/i3/TB15QffFVXXXXb4XFXXt4Rd7VXX-768-1280.png" width="300" height="400"> |
 | 图9-1 推广展示  | 图9-2 推广展示  |
 
-### 6. 文字链
+#### 6. 文字链
 
 在需要展示文字链的Activity 样式文件添加一个RelativeLayout 作为rootView 文字链长度填充rootView,高度将按照文字指定大小显示。
 <center>alimama_demo\src\com\taobao\example\xp\fragments\TextLinkExampleFragment.java</center>
@@ -478,7 +478,7 @@ exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banne
 ```
 exchangeViewManager-.setLoopInterval(time);
 ```
-### 7. 轮播大图
+#### 7. 轮播大图
 
 <center>alimama_demo\src\com\taobao\example\xp\fragments\LoopImageFragment.java</center>
 
@@ -493,11 +493,11 @@ viewMgr.addView(parent, ExchangeConstants.type_large_image);
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_02.png" width="250" height="400"> |
+| <img src="http://gtms03.alicdn.com/tps/i3/TB1Tp_jFVXXXXaKXpXXt4Rd7VXX-768-1280.png" width="250" height="400">   | <img src="http://gtms02.alicdn.com/tps/i2/TB1816kFVXXXXbQXXXXt4Rd7VXX-768-1280.png" width="250" height="400"> |
 | 图10-1 推广展示  | 图10-2 推广展示  |
 
 
-### 8.开屏
+#### 8.开屏
 
 开屏动画应当添加在app自身的开屏activity中
 
@@ -565,9 +565,9 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 * 设置开屏样式窗口样式'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_style'
 
 
-## 备注
+### 备注
 
-### 1. 可以通过设置下面的变量改变SDK默认的界面或者行为
+#### 1. 可以通过设置下面的变量改变SDK默认的界面或者行为
 
 >* ExchangeConstants.full_screen: 显示全屏推荐时是否隐藏系统工具栏
 >* ExchangeConstants.blur_switcher: 弹出窗口后是否使用阴影遮挡其他部分
@@ -578,7 +578,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 注意:不要改变这两个文件里面元素的id， 但是可以改变他们的属性， 比如，android:visible, 字体颜色，大小等。
 
 
-### 2. 权限说明
+#### 2. 权限说明
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tbody><tr>
@@ -607,7 +607,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 </tbody></table>
 
 
-### 3. 混淆
+#### 3. 混淆
 
 ```
 -dontwarn android.taobao.**
@@ -621,7 +621,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 }
 ```
 
-## 技术支持
+### 技术支持
 请发邮件至<mobilesupport@list.alibaba-inc.com>，我们会尽快回复您。 
 
 
