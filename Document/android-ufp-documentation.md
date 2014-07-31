@@ -205,8 +205,6 @@ public class InterstitialActivity extends Activity {
 
 
 ### 3. 推广墙
-* 请联系我们的客服，将您的淘宝账号加入到我们的白名单中<a href="http://www.umeng.com/aboutus_contact">客服</a>
-
 * 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
 
 
@@ -319,162 +317,8 @@ new ExchangeViewManager(context, new ExchangeDataService(slot_id))
     </RelativeLayout>
 ```
 
-### 4. 内嵌入口
 
-集成方式：
-
-```
-AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
-ViewGroup fatherLayout = (ViewGroup) this.findViewById(R.id.ad);
-ListView listView = (ListView) this.findViewById(R.id.list);
-ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this,new ExchangeDataService("slot_id"));
-exchangeViewManager.addView(fatherLayout, listView);    
-```
-
-对应的布局文件如下：
-
-
-```
-<RelativeLayout
-    android:id="@+id/ad"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#00000000"
-        android:cacheColorHint="#00000000"
-        android:divider="#dedfde"
-        android:dividerHeight="1px"
-        android:listSelector="#00000000" >
-    </ListView>
- </RelativeLayout>    
-```
-
-添加新推广提示
-
-1.在入口处预加载物料。
-入口Activity中：
-
-```
-AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
-preloadDataService = new ExchangeDataService("slot_id");
-preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
-    @Override
-    public void onChanged(int flag) {
-        //do some thing
-    };
-}, ExchangeConstants.type_container);
-```
-
-2.集成时使用preloadDataService 作为参数
-
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_02.png" width="300" height="400"> |
-| 图9-1 推广展示  | 图9-2 推广展示  |
-
-### 5. 文字链
-
-在需要展示文字链的Activity 样式文件添加一个RelativeLayout 作为rootView 文字链长度填充rootView,高度将按照文字指定大小显示。
-
-```
-AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
-ExchangeViewManager exchangeViewManager =
-new ExchangeViewManager(context, new ExchangeDataService(soltId));
-exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banner);
-```
-
-设置轮播时间，在exchangeViewManager.addView 之前添加如下，时间单位毫秒
-
-```
-exchangeViewManager-.setLoopInterval(time);
-```
-
-### 6. 轮播大图
-
-```
-AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
-//自定义一个 RelativeLayout 实例
-ViewGroup parent = 实例;
-ExchangeDataService service = new ExchangeDataService("slot_id");
-ExchangeViewManager viewMgr = new ExchangeViewManager(context, service);
-viewMgr.addView(parent, ExchangeConstants.type_large_image);
-```
-
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_02.png" width="250" height="400"> |
-| 图10-1 推广展示  | 图10-2 推广展示  |
-
-
-### 7.开屏
-
-```
-AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
-    /**
-        * 开屏样式集成：
-        * 
-        * WelcomeAdsListener：无论是否展示都会调用onFinish
-        *      
-        *  超时或请求数据完毕
-        *          |
-        * onDataReviced
-        *          |-没有推广-onFinish
-        *       有推广   
-        *          |
-        *       onShow
-        *          |-发生错误-onError
-        *          |                  |
-        *   onCountdown    onFinish
-        *         |
-        *      onFinish  
-        *      
-        *  如果在推广加载期间启动页已经关闭，将不会回调。
-        *          
-        */      
-        new ExchangeViewManager(this).addWelcomeAds("44751", new WelcomeAdsListener() {
-            @Override
-            public void onShow(View view) {
-                System.out.println("onShow ");
-            }
-            
-            @Override
-            public void onFinish() {
-                System.out.println("onFinish ");
-                WelcomeExample.this.finish();
-            }
-            @Override
-            public void onDataReviced(Promoter data) {
-                System.out.println("onDataReviced [" + (data == null ? 0 : data.size) );
-            }
-            
-            @Override
-            public void onCountdown(int count) {
-                System.out.println("onCountdown " + count);
-            }
-
-            @Override
-            public void onError(String msg) {
-                System.out.println("onError " + msg);
-            }
-        } , 1000, 3000);//推广将在调用addview 1000~3000 内展示，如果该时间段内没有接收到推广数据将调用onFinish
-```
-
-|                         |                                 |
-|:------------------------:|:------------------------------------:|
-| <img src="http://dev.umeng.com/images/android/image100.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image101.png" width="300" height="400"> |
-| 图10-1 启动页  | 图10-2 推广展示  |
-
-其他设置
-
-* ExchangeConstants.WELCOME_COUNTDOWN = true;//设置是否显示开屏样式倒计时
-* 设置开屏样式动画 'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_animation'
-* 设置开屏样式窗口样式'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_style'
-
-
-### 8.信息流
+### 4.信息流
 
 * 集成方式
 
@@ -564,6 +408,160 @@ Demo中给出了一个信息流样式集成的使用场景，初始化过程在X
 | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/feed02.png" width="250" height="400"> |
 |  图8-1 信息流样式1   | 图8-2 信息流样式2  |
 
+
+### 5. 内嵌入口
+
+集成方式：
+
+```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+ViewGroup fatherLayout = (ViewGroup) this.findViewById(R.id.ad);
+ListView listView = (ListView) this.findViewById(R.id.list);
+ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this,new ExchangeDataService("slot_id"));
+exchangeViewManager.addView(fatherLayout, listView);    
+```
+
+对应的布局文件如下：
+
+
+```
+<RelativeLayout
+    android:id="@+id/ad"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#00000000"
+        android:cacheColorHint="#00000000"
+        android:divider="#dedfde"
+        android:dividerHeight="1px"
+        android:listSelector="#00000000" >
+    </ListView>
+ </RelativeLayout>    
+```
+
+添加新推广提示
+
+1.在入口处预加载物料。
+入口Activity中：
+
+```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+preloadDataService = new ExchangeDataService("slot_id");
+preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
+    @Override
+    public void onChanged(int flag) {
+        //do some thing
+    };
+}, ExchangeConstants.type_container);
+```
+
+2.集成时使用preloadDataService 作为参数
+
+|                         |                                 |
+|:------------------------:|:------------------------------------:|
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_01.png" width="300" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/container_02.png" width="300" height="400"> |
+| 图9-1 推广展示  | 图9-2 推广展示  |
+
+### 6. 文字链
+
+在需要展示文字链的Activity 样式文件添加一个RelativeLayout 作为rootView 文字链长度填充rootView,高度将按照文字指定大小显示。
+
+```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+ExchangeViewManager exchangeViewManager =
+new ExchangeViewManager(context, new ExchangeDataService(soltId));
+exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banner);
+```
+
+设置轮播时间，在exchangeViewManager.addView 之前添加如下，时间单位毫秒
+
+```
+exchangeViewManager-.setLoopInterval(time);
+```
+
+### 7. 轮播大图
+
+```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+//自定义一个 RelativeLayout 实例
+ViewGroup parent = 实例;
+ExchangeDataService service = new ExchangeDataService("slot_id");
+ExchangeViewManager viewMgr = new ExchangeViewManager(context, service);
+viewMgr.addView(parent, ExchangeConstants.type_large_image);
+```
+
+|                         |                                 |
+|:------------------------:|:------------------------------------:|
+| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/header_image_02.png" width="250" height="400"> |
+| 图10-1 推广展示  | 图10-2 推广展示  |
+
+
+### 8.开屏
+
+```
+AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
+    /**
+        * 开屏样式集成：
+        * 
+        * WelcomeAdsListener：无论是否展示都会调用onFinish
+        *      
+        *  超时或请求数据完毕
+        *          |
+        * onDataReviced
+        *          |-没有推广-onFinish
+        *       有推广   
+        *          |
+        *       onShow
+        *          |-发生错误-onError
+        *          |                  |
+        *   onCountdown    onFinish
+        *         |
+        *      onFinish  
+        *      
+        *  如果在推广加载期间启动页已经关闭，将不会回调。
+        *          
+        */      
+        new ExchangeViewManager(this).addWelcomeAds("44751", new WelcomeAdsListener() {
+            @Override
+            public void onShow(View view) {
+                System.out.println("onShow ");
+            }
+            
+            @Override
+            public void onFinish() {
+                System.out.println("onFinish ");
+                WelcomeExample.this.finish();
+            }
+            @Override
+            public void onDataReviced(Promoter data) {
+                System.out.println("onDataReviced [" + (data == null ? 0 : data.size) );
+            }
+            
+            @Override
+            public void onCountdown(int count) {
+                System.out.println("onCountdown " + count);
+            }
+
+            @Override
+            public void onError(String msg) {
+                System.out.println("onError " + msg);
+            }
+        } , 1000, 3000);//推广将在调用addview 1000~3000 内展示，如果该时间段内没有接收到推广数据将调用onFinish
+```
+
+|                         |                                 |
+|:------------------------:|:------------------------------------:|
+| <img src="http://dev.umeng.com/images/android/image100.png" width="300" height="400">   | <img src="http://dev.umeng.com/images/android/image101.png" width="300" height="400"> |
+| 图10-1 启动页  | 图10-2 推广展示  |
+
+其他设置
+
+* ExchangeConstants.WELCOME_COUNTDOWN = true;//设置是否显示开屏样式倒计时
+* 设置开屏样式动画 'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_animation'
+* 设置开屏样式窗口样式'taobao_xp_cm_style.xml/taobao_xp_welcome_dialog_style'
 
 
 ## 备注
