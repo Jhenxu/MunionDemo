@@ -4,11 +4,12 @@
 * 服务简介:
 阿里妈妈推广SDK提供了商品推广，App自主推广，推广管理，App间交叉推广等功能。
 * SDK 简介：
-  * 提供 _**<font color='green'>8</font>**_ 种样式:  横幅，推广墙，内嵌墙，文字链，轮播大图，插屏，开屏，信息流
+  * 提供 _**<font color='green'>8</font>**_ 种样式:  横幅，推广墙（自定义入口），内嵌墙，文字链，轮播大图，插屏，开屏，信息流
 
 ===
 
 ### 2. 建立推广位，获推广位ID
+从下载SDK的网站申请推广位ID，应用中的每一个广告位都需要一个推广位ID。
 
 ### 3. SDK的集成
 
@@ -18,10 +19,10 @@
 
 > **注意** 
 >
-> Eclipse ADT 17 以上版本用户，请在工程目录下建一个文件夹`libs`，把jar包直接拷贝到这个文件夹下，再在Eclipse里面刷新一下工程就好了。不要通过上述步骤手动添加jar包引用。 详情请参考[Dealing with dependencies in Android projects](http://tools.android.com/recent/dealingwithdependenciesinandroidprojects).
+> Eclipse ADT 17 以上版本用户，请在工程目录下建一个文件夹`libs`，把jar包直接拷贝到这个文件夹下，再在Eclipse里面刷新一下工程。不要通过上述步骤手动添加jar包引用。 详情请参考[Dealing with dependencies in Android projects](http://tools.android.com/recent/dealingwithdependenciesinandroidprojects).
 
 ### 3.2 添加资源文件
-将SDK提供的`res`文件夹拷入工程目录下, 和工程本身`res`目录合并。 
+若下载的SDK中包含`res`文件夹，将`res`文件夹拷入工程目录下, 和工程本身`res`目录合并。 
 
 > **提示** 
 >
@@ -36,7 +37,7 @@
 ```
 
 ### 3.4 添加访问权限
-
+<center>alimama_demo\AndroidManifest.xml</center>
 ```
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -50,18 +51,17 @@
 
 ### 3.5 添加服务
 打开`AndroidManifest.xml`, 在`<application>`标签中声明SDK用到的下载服务:
-
+<center>alimama_demo\AndroidManifest.xml</center>
 ```
  <!-- 下载服务 -->
- <service
-     android:name="com.taobao.munion.base.download.DownloadingService"
+ <service    android:name="com.taobao.munion.base.download.DownloadingService"
      android:exported="true"
      android:process=":DownloadingService" >
  </service>
 ```
 
 添加应用详情页，如果不添加将使用弹窗方式打开
-
+<center>alimama_demo\AndroidManifest.xml</center>
 ```
  <!-- 应用详情页 -->
  <activity
@@ -77,7 +77,7 @@
 
 ### 1. 横幅(banner)
 步骤1：在布局文件中添加Banner推广位
-
+<center>alimama_demo\res\layout\banner_example.xml</center>
 ```
 <com.taobao.munion.view.banner.MunionBannerView
             android:id="@+id/bannerView"
@@ -86,7 +86,7 @@
 ```
 
 步骤2：在代码中设置Banner的推广位ID
-
+<center>alimama_demo\src\com\taobao\munion\demo\BannerActivity.java</center>
 ```
 public class BannerActivity extends Activity {
     MunionBannerView bannerView;
@@ -98,6 +98,7 @@ public class BannerActivity extends Activity {
 
         bannerView = (MunionBannerView) findViewById(R.id.bannerView);
         bannerView.setMunionId("58320");//设置推广位ID
+		bannerView.load();//加载Banner广告
     }
 
     @Override
@@ -138,7 +139,7 @@ public class BannerActivity extends Activity {
 ### 2.插屏
 
 步骤1：在布局文件中添加插屏推广位
-
+<center>alimama_demo\res\layout\interstitial.xml</center>
 ```
 //添加到全屏的ViewGroup中
 <com.taobao.munion.view.interstitial.MunionInterstitialView
@@ -150,7 +151,7 @@ public class BannerActivity extends Activity {
 ```
 
 步骤2：在代码中设置
-
+<center>alimama_demo\src\com\taobao\munion\demo\InterstitialActivity.java</center>
 ```
 public class InterstitialActivity extends Activity {
 	private MunionInterstitialView interstitialView;
@@ -172,7 +173,6 @@ public class InterstitialActivity extends Activity {
 							break;
 						case READY:
 							//仅当第一次加载完推广的时候回调
-							interstitialView.show();
 							break;
 						default:
 							break;
@@ -183,8 +183,6 @@ public class InterstitialActivity extends Activity {
 	
 	protected void onResume(){
 		super.onResume();
-		if(interstitialView != null){
-			interstitialView.show();
 		}
 	}
 	
@@ -207,7 +205,7 @@ public class InterstitialActivity extends Activity {
 ### 3. 推广墙
 * 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
 
-
+<center>alimama_demo\AndroidManifest.xml</center>
 ```
 
         <!-- 应用墙 -->
@@ -219,7 +217,7 @@ public class InterstitialActivity extends Activity {
             android:screenOrientation="portrait"
             android:theme="@style/DefaultStyledIndicators" />
 
-        <!-- 电商推广墙 -->
+        <!-- 电商推广墙（仅使用电商推广墙时也需要加上上面应用墙的代码） -->
         <activity
             android:name="com.taobao.newxp.view.handler.umwall.TaobaoWall"
             android:configChanges="keyboard|orientation"
@@ -246,7 +244,7 @@ public class InterstitialActivity extends Activity {
 3.1添加入口
 
 在需要展示推广墙的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
-<br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片，否则将不显示
+<br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片（在申请广告位ID时选择上传入口图片），否则将不显示
 
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
@@ -412,7 +410,7 @@ Demo中给出了一个信息流样式集成的使用场景，初始化过程在X
 ### 5. 内嵌入口
 
 集成方式：
-
+<center>alimama_demo\src\com\taobao\example\xp\fragments\ContainerExampleFragment.java</center>
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 ViewGroup fatherLayout = (ViewGroup) this.findViewById(R.id.ad);
@@ -422,8 +420,7 @@ exchangeViewManager.addView(fatherLayout, listView);
 ```
 
 对应的布局文件如下：
-
-
+<center>alimama_demo\res\layout\taobao_example_xp_container_activity.xml</center>
 ```
 <RelativeLayout
     android:id="@+id/ad"
@@ -458,7 +455,7 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 }, ExchangeConstants.type_container);
 ```
 
-2.集成时使用preloadDataService 作为参数
+2.然后把preloadDataService 作为上述集成方式中ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this,new ExchangeDataService("slot_id"))中的第二个参数。
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
@@ -468,7 +465,7 @@ preloadDataService.preloadData(getActivity(), new NTipsChangedListener() {
 ### 6. 文字链
 
 在需要展示文字链的Activity 样式文件添加一个RelativeLayout 作为rootView 文字链长度填充rootView,高度将按照文字指定大小显示。
-
+<center>alimama_demo\src\com\taobao\example\xp\fragments\TextLinkExampleFragment.java</center>
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 ExchangeViewManager exchangeViewManager =
@@ -481,8 +478,9 @@ exchangeViewManager.addView(rootView, ExchangeConstants.type_hypertextlink_banne
 ```
 exchangeViewManager-.setLoopInterval(time);
 ```
-
 ### 7. 轮播大图
+
+<center>alimama_demo\src\com\taobao\example\xp\fragments\LoopImageFragment.java</center>
 
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
@@ -500,6 +498,8 @@ viewMgr.addView(parent, ExchangeConstants.type_large_image);
 
 
 ### 8.开屏
+
+开屏动画应当添加在app自身的开屏activity中
 
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
@@ -534,6 +534,7 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
             public void onFinish() {
                 System.out.println("onFinish ");
                 WelcomeExample.this.finish();
+				//将开屏动画结束后的动作添加在此处
             }
             @Override
             public void onDataReviced(Promoter data) {
