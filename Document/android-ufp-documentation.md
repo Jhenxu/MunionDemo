@@ -98,25 +98,10 @@ public class BannerActivity extends Activity {
 
         bannerView = (MunionBannerView) findViewById(R.id.bannerView);
         bannerView.setMunionId("58320");//设置推广位ID
-		bannerView.load();//加载Banner广告
+        //bannerView.setClickCallBackListener()//设置点击回调
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-		//重新加载推广
-        if(bannerView != null){
-            bannerView.load();
-        }
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //关闭推广
-        if(bannerView != null)
-            bannerView.close();
-    }
 
     @Override
     public void onBackPressed() {
@@ -203,28 +188,18 @@ public class InterstitialActivity extends Activity {
 
 
 #### 3. 推广墙
-* 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
+* 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“推广墙”Activity.
 
 <center>alimama_demo\AndroidManifest.xml</center>
 ```
-		<!-- 集成推广墙样式必须配置以下Activity-->
-        <!-- 应用墙 -->
-        <activity
-            android:name="com.taobao.newxp.view.handler.umwall.UMWall"
-            android:configChanges="keyboard|orientation"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/DefaultStyledIndicators" />
-
-        <!-- 电商推广墙（仅使用电商推广墙时也需要加上上面应用墙的代码） -->
-        <activity
-            android:name="com.taobao.newxp.view.handler.umwall.TaobaoWall"
-            android:configChanges="keyboard|orientation"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/TaobaoStyledIndicators" />       
+ <!-- 推广墙 -->
+<activity
+    android:name="com.taobao.newxp.view.handler.umwall.AlimamaWall"
+    android:configChanges="keyboard|orientation"
+    android:hardwareAccelerated="true"
+    android:launchMode="singleTask"
+    android:screenOrientation="portrait"/>
+     
 ```
 * 电商墙效果
 
@@ -327,27 +302,35 @@ new ExchangeViewManager(context, new ExchangeDataService(slot_id))
 ```
 			AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
             FeedsManager feedsManager = new FeedsManager(getActivity());
-            String slot = "46660";
-            feedsManager.addMaterial(slot,slot);
+            String slot = "46660";//广告位
+            feedsManager.addMaterial(slot,slot);//添加要初始化的广告位
             slot = "46658";
             feedsManager.addMaterial(slot,slot);
-            feedsManager.incubate(); //开始孵化feed推广
+            feedsManager.incubate(); //开始初始化feed推广
             feedsManager.setIncubatedListener(new IncubatedListener() {                
                 @Override
                 public void onComplete(int status, Feed feed, Object tag) {
-                    //孵化过程回调
-//                    Toast.makeText(getActivity(), "get feed "+tag, Toast.LENGTH_SHORT).show();
+                    //Listener 回调中可做数据校验和事件响应，获取Feed请使用步骤2中
+                    //的feedsManager.getProduct获取
+                    //status:0 实时推广获取失败 1实时推广获取成功 2缓存推广获取成功
+                    
                 }
-            });
+            });       
 ```
+
+ps:初始化推广位建议在app发起网络请求时添加
 
 步骤2：在列表页获取已经初始化成功的Feed
+> 注意:feedsManager.getProduct内部有缓存机制，在非首次加载且开启信息流缓存的情况下能保证及时获取到Feed
+
 
 ```
-List<Feed> mGlobalFeeds = new ArrayList<Feed>();
-//将初始化完成的Feed装入mGlobalFeeds
-feedsManager.getProducts(mGlobalFeeds);//这里的feedsManager和步骤1中使用的FeedsManager是同一个对象
+//这里的feedsManager和步骤1中使用的FeedsManager是同一个对象
+//product 有可能为null
+Feed feed =feedsManager.getProduct(slot);
 ```
+
+ps:获取product建议放在app的网络请求结束 
 
 步骤3：将获取的Feed你设定的插入方式插入列表
 1.使用FeedViewFactory生成相应的View以便插入List中
@@ -356,10 +339,25 @@ feedsManager.getProducts(mGlobalFeeds);//这里的feedsManager和步骤1中使�
 View feedView = FeedViewFactory.getFeedView(activity, feed);
 ```
 
+ps:生成feedView可以在adapter的getView中
+
+注意：如果获取的Feed已经使用过，第二次进入想要复用之前使用过的Feed,需要调用cleanReportFlag
+
+```
+//再次使用feed必须调用cleanReportFlag，否则将不发送展示报告
+feed.cleanReportFlag();            
+```
+
+Tips:Demo中com.taobao.example.xp.fragments.FeedsFragment 模拟用户app的页面渲染周期集成了Feed，可供参考
+
+
 2.直接使用Feed中的推广数据定制UI
 
 ```
  List<Promoter> promoters = feed.getPromoters();//获取一个feed中包含的推广信息
+ 
+ //当promoters 被使用时，需要调用以下接口发送展示pv，否则将影响结算
+ //feed.getDataService(context).reportImpression(...);
 ```
 
 Promoter 中字段含义
@@ -389,13 +387,6 @@ Promoter 中字段含义
 |app_version_name|APK的版本名|
 |new_tip|是否新推广 1 表示新推广 0 非新推广(default)|
 
-
-注意：如果获取的Feed已经使用过，第二次进入想要复用之前使用过的Feed,需要调用cleanReportFlag
-
-```
-//再次使用feed必须调用cleanReportFlag，否则将不发送展示报告
-feed.cleanReportFlag();            
-```
 
 Demo中给出了一个信息流样式集成的使用场景，初始化过程在XpHome.java页面中进行，使用在FeedsExample.java
 
@@ -516,10 +507,10 @@ AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
         *          |
         *       onShow
         *          |-发生错误-onError
-        *          |                  |
+        *          |           |
         *   onCountdown    onFinish
-        *         |
-        *      onFinish  
+        *          |
+        *       onFinish  
         *      
         *  如果在推广加载期间启动页已经关闭，将不会回调。
         *          

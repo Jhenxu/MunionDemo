@@ -1,6 +1,31 @@
 
 # ANDROID SDK Release Note
 
+
+
+<8月迭代>
+##### 版本: v7.3.0.20140903
+##### 发布日期: 2014.09.03
+##### 更新：
+
+1.合并电商墙和应用墙使用一个Activity
+
+```
+<activity
+    android:name="com.taobao.newxp.view.handler.umwall.AlimamaWall"
+    android:configChanges="keyboard|orientation"
+    android:hardwareAccelerated="true"
+    android:launchMode="singleTask"
+    android:screenOrientation="portrait"/>
+```
+2.H5页面性能优化，首屏速度提升40%
+
+3.Mraid协议扩展，新增支持打电话，发短信，发邮件等功能
+
+4.优化支持唤醒淘宝客户端
+
+5.优化一些UI，修复一些bug
+
 ##### 版本: v7.2.0.20140714
 ##### 发布日期: 2014.07.14
 ##### 更新：
