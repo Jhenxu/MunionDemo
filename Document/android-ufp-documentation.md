@@ -414,20 +414,30 @@ exchangeViewManager.addView(fatherLayout, listView);
 <center>alimama_demo\res\layout\taobao_example_xp_container_activity.xml</center>
 ```
 <RelativeLayout
-    android:id="@+id/ad"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-    <ListView
-        android:id="@+id/list"
+        android:id="@+id/ad"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#00000000"
-        android:cacheColorHint="#00000000"
-        android:divider="#dedfde"
-        android:dividerHeight="1px"
-        android:listSelector="#00000000" >
-    </ListView>
- </RelativeLayout>    
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp">
+    <!-- native list 设置 -->
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#00000000"
+            android:cacheColorHint="#00000000"
+            android:divider="#dedfde"
+            android:dividerHeight="1px"
+            android:listSelector="#00000000" />
+        
+    <!-- webview list 设置 -->
+        <com.taobao.newxp.view.container.MunionContainerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+    
 ```
 
 添加新推广提示
