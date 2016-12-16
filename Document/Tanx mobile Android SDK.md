@@ -1,372 +1,314 @@
-## **<center>Alimama Tanx移动SDK 使用指南</center>**
+## **<center>Tanx移动Android SDK集成指南</center>**
 
 ### 1. 简介： 
 * 服务简介:
-UFP提供了App自主推广，推广管理，App间交叉推广等功能。
+Tanx移动SDK提供了商品推广，App自主推广，推广管理，App间交叉推广等功能。
 * SDK 简介：
-  * 提供 _**<font color='green'>3</font>**_ 种样式:  横幅(Banner), 插屏(Interstitial) 小把手(Handle), 
+  * 提供 _**<font color='green'>3</font>**_ 种样式：横幅、推广墙、插屏
 
-===
+---
 
+### 2. 建立推广位，获取推广位ID
+#### 2.1 添加应用
 
-### 1. 建立推广位，获取Slot id
-  
-### <a name="open_taobao"></a>1.1 申请淘宝开放平台账号(自定义入口样式需要申请,不集成自定义入口可以跳过)
+ * 点击“推广管理-应用管理”页面的“新建应用”按钮，按照要求填写应用的名称、平台、下载地址、类别等信息。
 
-* 首先确认联系客服将需要申请淘宝开放平台的账号加入白名单中，客服联系方式:<mobilesupport@list.alibaba-inc.com>
+ * <div style="float:left;width:100%;"><img style='border:1px solid #cacaca' src="http://gtms03.alicdn.com/tps/i3/TB1DsjyFVXXXXbgXFXXC3Wn2pXX-1076-352.jpg"/></a></div><div style="clear:both"></div>
+ 
 
-* **登录** http://open.taobao.com/index.htm 
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_index.jpg"/></a></div><div style="clear:both"></div>
-  
-* **点击加入开放平台并登录** 登录后按照引导进行开发者认证，认证完成后，您将看到如下页面，点击创建应用
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_login.jpg"/></a></div><div style="clear:both"></div>  
-  
-* **创建应用** 填写应用名称 (应用标签必须选择无线营销)--> 申请开发测试，上传图片 --> 提交安全扫描 --> 等待对外发布
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_01.jpg"/></a></div><div style="clear:both"></div>  
+ * 您的应用一般会在1-2个工作日内提交成功，应用提交成功后则可基于此应用添加推广位。
 
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/taobaoopen_create_app_02.jpg"/></a></div><div style="clear:both"></div>  
+ * 您可以在应用管理页面的提交状态位置查看提交状态。如果应用提交被拒绝，请根据提示的拒绝原因整改之后重新提交。
 
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/opentaobao_create_app_03.jpg"/></a></div><div style="clear:both"></div>
-
-* **Android应用认证** 申请完成后，按照下图，点击Android应用认证，填写758665872，保存
-  <div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_taobao_android_sign.jpg"/></a></div><div style="clear:both"></div>
-
-
-## 2. SDK的集成
-
-### 2.1 导入SDK 所需 jar包
-下载最新版SDK的zip包，将其中的jar包解压到本地工程`libs`子目录下。
-> `Eclipse`用户右键工程根目录，选择`Properties -> Java Build Path -> Libraries`，然后点击`Add External JARs...` 选择指向jar的路径，点击`OK`，即导入成功。
+ * <div style="float:left;width:100%;"><img style='border:1px solid #cacaca' src="http://gtms04.alicdn.com/tps/i4/TB1ONtUFVXXXXcuaXXXZcECTFXX-1406-330.jpg"/></a></div><div style="clear:both"></div>
 
 
 
-  Handler的jar目录为**alimama_sdk/alimama_handler/xxx.jar**
-  
-  banner和插屏的目录为**alimama_sdk/alimama_banner_Interstitial/**，其中**alimama_core/xxx.jar**为banner和handler公用，如果集成banner需要拷贝**alimama_banner/xxx.jar**，如果集成插屏在**alimama_interstitial/xxx.jar**
+#### 2.2 建立推广位，获取推广位ID
+
+ * 如果应用提交成功，则可以立即开始创建您的推广位！ 
+
+ * <div style="float:left;width:100%;"><img style='border:1px solid #cacaca' src="http://gtms03.alicdn.com/tps/i3/TB10ZHyFVXXXXXWXVXXuOaOFpXX-984-260.jpg"/></a></div><div style="clear:both"></div>
+
+ 
+ * 点击“推广管理-推广位管理-SDK集成推广”页面的“新建推广位”按钮选择推广位所属应用、推广位入口样式（即样式），按照要求填写完整推广位信息。
+
+ * <div style="float:left;width:100%;"><img style='border:1px solid #cacaca' src="http://gtms02.alicdn.com/tps/i2/TB1v1HJFVXXXXXHXXXX3r5hKFXX-710-381.png"/></a></div><div style="clear:both"></div>
 
 
-> **注意** 
->
-> Eclipse ADT 17 以上版本用户，请在工程目录下建一个文件夹`libs`，把jar包直接拷贝到这个文件夹下，再在Eclipse里面刷新一下工程就好了。不要通过上述步骤手动添加jar包引用。 详情请参考[Dealing with dependencies in Android projects](http://tools.android.com/recent/dealingwithdependenciesinandroidprojects).
+ * 推广位创建完毕后，即可获取推广位ID，用于SDK集成。
 
-### 2.2 添加资源文件
-将SDK提供的`res`文件夹拷入工程目录下, 和工程本身`res`目录合并。 
+ * 点击“推广管理-推广位管理-SDK集成推广”页面的“获取推广位ID”按钮，在推广位ID页面复制取用即可。
 
-> **提示** 
->
-> SDK提供的资源文件都以`umeng_`或`munion_`开头。
-> Handler的资源文件在**alimama_sdk/alimama_handler/res**,
-> banner和插屏目前没有样式
+ * <div style="float:left;width:100%;"><img style='border:1px solid #cacaca' src="http://gtms01.alicdn.com/tps/i1/TB1HtHyFVXXXXcKXpXXobkmGVXX-671-311.png"/></a></div><div style="clear:both"></div>
 
 
-### 2.3 添加渠道 (可选：UFP用户按渠道投放推广)
+ * 新建推广位只能基于已经显示提交成功的应用。在Tanx移动平台上新建推广位所选样式、所获取的推广位ID，需要在SDK集成过程中对应好， 否则推广可能无法生效。
+
+### 3. SDK的集成
+
+#### 3.3 添加渠道 (可选：用户按渠道进行推广)
 在`<application>`中添加
 
 ```
-<meta-data android:value="xxxxxxxx" android:name="UMENG_CHANNEL"></meta-data>
+<meta-data android:value="xxxxxxxx" android:name="MUNION_CHANNEL"></meta-data>
 ```
 
-### 2.4 添加访问权限
+#### 3.1 导入SDK 所需的文件
 
+1. 将SDK文件夹下的jar文件本地工程`libs`子目录下。
+2. 将 'assets/mu/'文件夹中的apk文件添加到本地工程的 'assets/mu/'下。
+
+#### 3.4 添加访问权限
+<center>alimama_demo\AndroidManifest.xml</center>
 ```
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-```
-
-### 2.5 添加服务
-打开`AndroidManifest.xml`, 在`<application>`标签中声明SDK用到的下载服务:
-
-> 注意：com.umeng包名可能有变，如果不能下载，请检查包名，替换成正确的包名。
-
-```
- <!-- 下载服务 -->
- <service
-     android:name="com.umeng.common.ufp.net.DownloadingService"
-     android:exported="true"
-     android:process=":DownloadingService" >
- </service>
-```
-
-```
- <!-- 下载服务 -->
- <service
-     android:name="com.taobao.munion.base.download.DownloadingService"
-     android:exported="true"
-     android:process=":DownloadingService" >
- </service>
-```
-
-
-添加应用详情页，如果不添加将使用弹窗方式打开
-
-```
- <!-- 应用详情页 -->
-  <activity
-            android:name="com.umeng.newxp.view.UMDetail"
-            android:configChanges="keyboard|orientation"
-            android:launchMode="standard" />
-```
-
-
-添加推广信息打开二跳墙功能，如果不添加出现二条推广点击将提示“无法打开页面”（需要android-support-v4.jar支持）
-
-
-```
-        <!-- 应用墙 -->
-        <activity
-            android:name="com.umeng.newxp.view.handler.umwall.UMWall"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 电商墙 -->
-        <activity
-            android:name="com.taobao.munion.ewall.EWallContainerActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 城市切换选择页，用于团购类页面 -->
-        <activity
-            android:name="com.umeng.newxp.view.UMCity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
-```
-
-
-
-下面是一个完整的`AndroidManifest.xml`文件的例子。
-
-```
- <?xml version="1.0" encoding="utf-8"?>
- <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.umeng.example"
-    android:versionCode="1"
-    android:versionName="1.0" >
-    <application
-        android:debuggable="true"
-        android:icon="@drawable/icon"
-        android:label="@string/app_name" >                
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Android market" />
-        <activity
-            android:name="com.umeng.newxp.view.UMDetail"
-            android:configChanges="keyboard|orientation"
-            android:launchMode="standard" />
-        <!-- 应用墙 -->
-        <activity
-            android:name="com.umeng.newxp.view.handler.umwall.UMWall"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 电商墙 -->
-        <activity
-            android:name="com.taobao.munion.ewall.EWallContainerActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 城市切换选择页，用于团购类页面 -->
-        <activity
-            android:name="com.umeng.newxp.view.UMCity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
-        <!-- 声明SDK用到的下载服务 -->
-        <service
-            android:name="com.umeng.common.ufp.net.DownloadingService"
-            android:exported="true"
-            android:process=":DownloadingService" >
-        </service>
-    </application>
-    <uses-sdk android:minSdkVersion="4" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-</manifest>
+    <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-## 3 选择显示样式
-
-下载面列出了SDK所支持的所有样式。
-
-### 1. 横幅(banner)
-
-步骤1：在布局文件中添加Banner推广位
-
+#### 3.5 添加服务
+打开`AndroidManifest.xml`, 在`<application>`标签中声明SDK用到的下载服务:
+<center>alimama_demo\AndroidManifest.xml</center>
 ```
-<com.taobao.munion.view.banner.MunionBannerView
-            android:id="@+id/bannerView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+ <!-- 下载服务 -->
+ <service android:name="com.alimama.mobile.sdk.shell.DownloadingService">
+            <intent-filter>
+                <action android:name="com.alimama.mobile.sdk.download.action" />
+            </intent-filter>
+ </service>
 ```
 
-步骤2：在代码中设置Banner的推广位ID
+添加应用详情页，如果不添加将使用弹窗方式打开
+<center>alimama_demo\AndroidManifest.xml</center>
+```
+ <!-- 应用详情页 -->
+ <activity
+       android:name="com.alimama.mobile.sdk.shell.AlimamaDetail"
+       android:configChanges="keyboard|orientation"
+       android:launchMode="standard"
+       android:screenOrientation="portrait" />
+```
 
+#### 3.6 初始化SDK
+
+注意：初始化SDK必须在集成样式的页面之前，如果在首页集成样式，请重写Application，并在Application中进行初始化。
+```
+ MmuSDKFactory.getMmuSDK().init(getApplication());
+ MmuSDKFactory.registerAcvitity(ContainerActivity.class);//注册集成样式页的Activity
+```
+
+### 4. 选择推广样式
+
+下面列出了SDK所支持的所有样式。
+
+#### 4.1 横幅(banner)
+
+步骤1：添加插件apk（如：Banner_plugin-1.0.apk）到项目工程的 'assets/mu/'目录下
+
+步骤2：在需要添加样式的布局文件中加入一个ViewGroup来给样式定位
+
+例如：
+
+```
+<RelativeLayout
+    android:layout_alignParentBottom="true"
+    android:id="@+id/bannerParent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+</RelativeLayout>
+```
+
+步骤3：在集成页的代码中添加
+
+例如：
+<center>alimama_demo\src\com\alimama\mobile\demo\BannerActivity.java</center>
 ```
 public class BannerActivity extends Activity {
-    MunionBannerView bannerView;
-    
+    private BannerProperties properties;
+    private BannerController mController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.banner_example);
-
-        bannerView = (MunionBannerView) findViewById(R.id.bannerView);
-        bannerView.setMunionId("58320");//设置推广位ID
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-		//重新加载推广
-        if(bannerView != null){
-            bannerView.load();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //关闭推广
-        if(bannerView != null)
-            bannerView.close();
+        setContentView(R.layout.banner);
+        ViewGroup nat = (ViewGroup) findViewById(R.id.bannerParent);
+        String slotId = "59335";//注意：该广告位只做测试使用，请勿集成到发布版app中
+        setupAlimama(nat, slotId);
     }
 
     @Override
     public void onBackPressed() {
         boolean interrupt = false;
-        if (bannerView != null) {//通知Banner推广返回键按下，如果Banner进行了一些UI切换将返回true
-                                // 否则返回false(如从 expand状态切换会normal状态将返回true)
-            interrupt = bannerView.onBackPressed();
+        if (mController != null) {// 通知Banner推广返回键按下，如果Banner进行了一些UI切换将返回true
+            // 否则返回false(如从 expand状态切换会normal状态将返回true)
+            interrupt = mController.onBackPressed();
         }
 
         if (!interrupt)
             super.onBackPressed();
     }
+
+    private void setupAlimama(ViewGroup nat, String slotId) {
+        MmuSDK mmuSDK = MmuSDKFactory.getMmuSDK();
+        mmuSDK.init(getApplication());//初始化SDK,该方法必须保证在集成代码前调用，可移到程序入口处调用
+        properties = new BannerProperties(slotId, nat);
+        mController = (BannerController) properties.getMmuController();
+        mmuSDK.attach(properties); 
+    }
 }
 ```
+
+PS：更多设置请参考Demo中集成代码。
+
 |             |
 |:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/banner.png" width="260" height="400">   | 
+| <img src="http://gtms01.alicdn.com/tps/i1/TB16TjiFVXXXXavXpXXlbwZHpXX-246-399.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
-### 2.插屏
+#### 4.2 插屏
 
-步骤1：在布局文件中添加插屏推广位
+
+步骤1：添加插件apk（如：InsertPlugin-1.0.apk）到项目工程的 'assets/mu/'目录下
+
+步骤2：在需要添加样式的布局文件中加入一个ViewGroup来给样式定位
+
+例如：
+
+--请将该布局添加到原来布局最上层，并且长宽全部填充满--
 
 ```
-//添加到全屏的ViewGroup中
-<com.taobao.munion.view.interstitial.MunionInterstitialView
-        android:id="@+id/interstitialView"
+<RelativeLayout
+        android:id="@+id/nat"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />        
 ```
 
-步骤2：在代码中设置
-
+步骤3：在集成页的代码中添加
+<center>alimama_demo\src\com\alimama\mobile\demo\InsertActivity.java</center>
 ```
-public class InterstitialActivity extends Activity {
-	private MunionInterstitialView interstitialView;
-
+public class InsertActivity extends Activity{
+    private InsertProperties properties;
+    private InsertController mController; 
+    
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.interstitial);
 
-		interstitialView = (MunionInterstitialView) findViewById(R.id.interstitialView);
-		interstitialView.load(MainActivity.INSET_ID);//加载插屏推广
+        setContentView(R.layout.interstitial);
 
-		interstitialView
-				.setOnStateChangeCallBackListener(new OnStateChangeCallBackListener() {
-					@Override
-					public void onStateChanged(InterstitialState state) {
-						switch (state) {
-						case CLOSE:
-							//关闭推广
-							break;
-						case READY:
-							//仅当第一次加载完推广的时候回调
-							interstitialView.show();
-							break;
-						default:
-							break;
-						}
-					}
-				});
-	}
-	
-	protected void onResume(){
-		super.onResume();
-		if(interstitialView != null){
-			interstitialView.show();
-		}
-	}
-	
-	protected void onPause(){
-		super.onPause();
-		if(interstitialView != null){
-			interstitialView.close();
-		}
-	}
+        ViewGroup parent = (ViewGroup) findViewById(R.id.nat);
+        final String slotId = "59338";//注意：该广告位只做测试使用，请勿集成到发布版app中
+        setupAlimama(parent, slotId);
+
+        Button btLoad = (Button) findViewById(R.id.interstitialLoad);
+        btLoad.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                if(mController != null){
+                    mController.load(slotId);//显示插屏
+                }
+            }
+        });
+        
+        Button btClose = (Button) findViewById(R.id.interstitialClose);
+        btClose.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                if(mController != null){
+                    mController.close();//隐藏插屏
+                }
+            }
+        });
+    }
+
+	private void setupAlimama(ViewGroup parent, String slotId) {
+        MmuSDK mmuSDK = MmuSDKFactory.getMmuSDK();
+        mmuSDK.init(getApplication());//初始化SDK,该方法必须保证在集成代码前调用，可移到程序入口处调用
+        properties = new InsertProperties(slotId, parent);
+		mController = (InsertController) properties.getMmuController();
+        mmuSDK.attach(properties); 
+    }
 }
-
 ```
+
+PS：更多设置请参考Demo中集成代码。
+
 |             |
 |:-----------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/float.png" width="260" height="400">   | 
+| <img src="http://gtms01.alicdn.com/tps/i1/TB1vVvjFVXXXXaVXpXX1NcSHpXX-246-401.png" width="260" height="400">   | 
 | 图6-1 banner推广 |
 
-### 3. 自定义入口
-* 请联系我们的客服，将您的淘宝账号加入到我们的白名单中
-* ，客服邮箱: <mobilesupport@list.alibaba-inc.com>
 
-* 确认使用上一步加入白名单的淘宝账号到<a href="http://open.taobao.com/index.htm">淘宝开放平台</a>申请加入，并创建应用，<a href="#open_taobao">点击查看创建流程</a> 
 
-* 自定义入口已升级，需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“应用墙”Activity.
+#### 4.3 推广墙
+* 需要类库 'android-support-v4.jar'，并且需要在Manifest文件中注册“推广墙”Activity.
 
-* 确认注册了以下Activity,其中EwallContainerActivity 需要增加data标签,其中host="oauth.m.taobao.com" android:pathPattern="/callback*" 固定填写,android:scheme为btaobao开头，加之前注册开放平台并创建应用的appkey,如android:scheme="btaobao21736666"
+步骤1： 添加插件apk（如：HandlePlugin-1.0.apk）到项目工程的 'assets/mu/'目录下
+
+步骤2：在Manifest中注册墙使用的Activity
+<center>alimama_demo\AndroidManifest.xml</center>
+-- 推广墙 --
 
 ```
-        <!-- 应用墙 -->
-        <activity
-            android:name="com.umeng.newxp.view.handler.umwall.UMWall"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicators" />
-        <!-- 电商墙 -->
-        <activity
-            android:name="com.taobao.munion.ewall.EWallContainerActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            android:exported="true"            
-            android:theme="@style/StyledIndicators">
-            
-            <data
-                    android:host="oauth.m.taobao.com"
-                    android:pathPattern="/callback*"
-                    android:scheme="btaobao21736666" />
-                    
-        </activity>
-        <!-- 城市切换选择页，用于团购类页面 -->
-        <activity
-            android:name="com.umeng.newxp.view.UMCity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait" />
+<activity
+    android:name="com.alimama.mobile.sdk.shell.AlimamaWall"
+    android:configChanges="keyboard|orientation"
+    android:hardwareAccelerated="true"
+    android:launchMode="singleTask"
+    android:screenOrientation="portrait" />
+     
 ```
+
+步骤3：在需要添加样式的布局文件中加入一个ViewGroup来给样式定位
+
+例如：
+```
+   <RelativeLayout
+        android:id="@+id/nat"
+        android:layout_width="55dp"
+        android:layout_height="50dp">
+    </RelativeLayout>
+```
+
+步骤4：在集成页的代码中添加
+<center>alimama_demo\src\com\alimama\mobile\demo\HandleActivity.java</center>
+```
+public class HandleActivity extends Activity{
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.inset);
+        ViewGroup nat = (ViewGroup) findViewById(R.id.nat);
+        String slotId = "60338";
+        setupAlimama(nat, slotId);
+    }
+
+    private void setupAlimama(ViewGroup nat, String slotId) {
+        MmuSDK mmuSDK = MmuSDKFactory.getMmuSDK();
+        mmuSDK.init(getApplication());
+        HandleProperties properties = new HandleProperties(slotId,nat);
+        mmuSDK.attach(properties);
+    }
+}
+```
+PS：更多设置请参考Demo中集成代码。
+
 * 电商墙效果
 
 |                         |                                 |
 |:------------------------:|:------------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/tbwall02.png" width="250" height="400"> |
+| <img src="http://gtms02.alicdn.com/tps/i2/TB1RtTjFVXXXXXkXpXXHBNITXXX-200-356.png" width="250" height="400">   | <img src="http://gtms04.alicdn.com/tps/i4/TB1cq6nFVXXXXacXXXXHBNITXXX-200-356.png" width="250" height="400"> |
 |  图8-1 电商墙样式   | 图8-2 电商墙搜索  |
 
 
@@ -374,177 +316,22 @@ public class InterstitialActivity extends Activity {
 
 |                         |                                 |
 |:------------------------:|:------------------------------:|
-| <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall01.png" width="250" height="400">   | <img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/appwall02.png" width="250" height="400"> |
+| <img src="http://gtms03.alicdn.com/tps/i3/TB1m56dFVXXXXbAXVXXA0gJJXXX-720-1280.png" width="250" height="400">   | <img src="http://gtms04.alicdn.com/tps/i4/TB1uOR3FVXXXXbfapXXcJdn0pXX-576-1024.png" width="250" height="400"> |
 |  图8-1 精品推荐样式1   | 图8-2 精品推荐样式2  |
 
-3.1动态图标
 
-在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
-<br><span style="font-weight: bold">注意：</span>该样式不需要在ImageView中指定图片。但必须在云端配置图片，否则将不显示
+### 5. 备注
 
-```
-ExchangeConstants.MTOP_APPKEY = <appkey(开放平台appkey)>;
-ExchangeConstants.MTOP_APP_SECRET = <appsecret(开放平台appsecret)>;
-ExchangeConstants.MTOP_APP_SIGNATURE = <sign(android应用证书)>;
-View imageview = findViewById(R.id.rlayout1);
-new ExchangeViewManager(context, new ExchangeDataService(slot_id))
-                 .addView(ExchangeConstants.type_list_curtain, imageview);
-```
-
-MTOP_APPKEY为开放平台appkey  
-MTOP_APP_SECRET为开放平台appsecret  
-MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
-
-appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
-
-<div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
-
-1.在需要添加入口的布局文件中添加如下布局信息
-
-```
-
-      <!-- 入口布局 -->
-    <RelativeLayout
-        android:id="@+id/rlayout1"
-        android:layout_width="40dp"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true" >
-
-        <!-- 入口点击图标 -->
-        <ImageView
-            android:id="@+id/imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="5dp"
-            android:scaleType="fitXY" />
-        
-        <!-- 入口文字 -->
-         <TextView
-            android:id="@+id/textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginRight="5dp"
-            android:textSize="12sp"
-            android:textColor="#000"/>
-
-        <!-- 新推广提示布局 -->
-       <RelativeLayout
-            android:id="@+id/newtip_area"
-            android:layout_width="28dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:gravity="right" >
-
-            <ImageView
-                android:id="@+id/newtip_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:scaleType="fitCenter" />
-
-            <TextView
-                android:id="@+id/newtip_tv"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:paddingBottom="4dp"
-                android:textColor="#ffffff"
-                android:textSize="8sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-        
-    </RelativeLayout>
-```
-   
-3.2静态图标
-
-在需要展示小把手的Activity 样式文件添加一个ImageView ，添加宽度，高度，图片等属性：
-
-```
-ExchangeConstants.MTOP_APPKEY = <appkey(开放平台appkey)>;
-ExchangeConstants.MTOP_APP_SECRET = <appsecret(开放平台appsecret)>;
-ExchangeConstants.MTOP_APP_SIGNATURE = <sign(android应用证书)>;
-ImageView imageview = (ImageView) findViewById(R.id.image_view_id);
-Drawable drawable = context.getResources().getDrawable(R.drawable.drawable_id);
-new ExchangeViewManager(context, new ExchangeDataService("slot_id"))
-            .addView(ExchangeConstants.type_list_curtain, imageview, drawable);            
-```
-
-MTOP_APPKEY为开放平台appkey  
-MTOP_APP_SECRET为开放平台appsecret  
-MTOP_APP_SIGNATURE为开放平台android应用认证，默认为758665872  
-
-appkey和appsecret在开放平台中，应用设置-->应用证书中查看，如下图
-
-<div style="float:left;width:100%;"><img src="https://raw.github.com/Jhenxu/MunionDemo/master/Document/images/open_ certificate.tiff"/></a></div><div style="clear:both"></div>
-
-## 备注
-
-### 1. 在非中文手机上，默认不展示推广内容。
-如果想在非中文手机上显示推广内容， 在请求数据之前将ExchangeConstants.ONLY_CHINESE设置为false。
-
-```
-public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.splash_activity);
-        ExchangeConstants.ONLY_CHINESE=false;
-        ViewGroup fatherLayout1 = (ViewGroup) this.findViewById(R.id.tab1);
-        ListView listView1 = (ListView) this.findViewById(R.id.list1);
-        new ExchangeViewManager().addView(this, fatherLayout1, listView1);
-}       
-```
-
-### 2. 可以通过设置下面的变量改变SDK默认的界面或者行为
+#### 5.1 可以通过设置下面的变量改变SDK默认的界面或者行为
 
 >* ExchangeConstants.full_screen: 显示全屏推荐时是否隐藏系统工具栏
->* ExchangeConstants.blur_switcher: 弹出窗口后是否使用阴影遮挡其他部分
 >* ExchangeConstants.ONLY_CHINESE: 是否在非中文环境下展示，默认关闭
->* ExchangeConstants.banner_alpha：如果使用standAlone模式，可设置banner的透明度
 >* ExchangeConstants.TIPS_DOWNLOAD：如果使用全屏样式对notification不可见，可设置该字段下载完成会有Toast提示。
->* ExchangeConstants.PRELOAD_REPEAT_COUNT：可设置加载的推广复用次数，默认值 1（如小把手进入后退出再进入会复用上一次加载的推广）
->* 如果想要修改默认的列表元素显示样式， 可以修改文件
-对于嵌入式List： exchange_container_banner.xml. 
-对于置顶/底下把手：exchange_normal_banner.xml
 
 注意:不要改变这两个文件里面元素的id， 但是可以改变他们的属性， 比如，android:visible, 字体颜色，大小等。
 
->* 如果想在Logcat里面打印log: <br>
-&nbsp;&nbsp;&nbsp;  com.umeng.common.ufp.Log.LOG = true; <br>
-&nbsp;&nbsp;&nbsp;  ExchangeConstants.DEBUG_MODE=true;
 
-### 3. 其他接口功能介绍
-
-#### 1.Exchange.initializeListener 数据初始化回调接口
-
-推广数据加载回调，可用来判断推广信息是否加载成功
-
-使用方法：
-
-```
-exDataService = ...
-
-exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
-            @Override
-            public void onStartRequestData(int type) {
-            	//开始加载推广信息，type:推广位类型
-            }
-
-            @Override
-            public void onReceived(int count) {
-            	//count:成功加载推广信息的数量
-            }
-        };
-        
-```
-
-
-### 4. 权限说明
+#### 5.2 权限说明
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tbody><tr>
@@ -563,35 +350,34 @@ exDataService.initializeListener = new XpListenersCenter.InitializeListener() {
   </tr>
   <tr>
     <td>android.permission.READ_PHONE_STATE</td>
-    <td>检测网络状态，阿里妈妈吗SDK 1.6版本新增权限。</td>
+    <td>检测网络状态</td>
   </tr>
 
   <tr>
     <td>android.permission.WRITE_EXTERNAL_STORAGE</td>
-    <td>如果您使用了友盟自动更新提醒功能，需添加这个权限，为了将更新的APK临时存在SD卡里。</td>
+    <td>将更新的APK临时存在SD卡里。</td>
   </tr>
 </tbody></table>
 
 
-### 5. 混淆
+#### 5.3 混淆
 
 ```
--dontwarn com.umeng.**
-
 -dontwarn android.taobao.**
-
 -dontwarn com.taobao.**
+-dontwarn com.alimama.mobile.**
+-dontwarn  android.app.**
+-dontwarn android.support.v4.**
 
--keep class com.umeng.** {*;}
+-keepattributes Signature
+-keepattributes *Annotation*
+
 -keep class com.taobao.** {*; }
+-keep class com.alimama.mobile.**{*; }
 -keep class android.taobao.** {*; }
-
--keep public class [your_pkg].R$*{
-    *;
-}
+-keep class android.support.v4.** { *; }
+-keep class android.app.**{*;}
 ```
-> 混淆过程中遇到的问题,具体请见[这里](/faq/faq_diff_android.html?expand=1).
 
-
-## 技术支持
-请发邮件至<mobilesupport@list.alibaba-inc.com>，我们会尽快回复您。 
+### 6. 技术支持
+请发邮件至<mobilesupport@list.alibaba-inc.com>，我们会尽快回复您。

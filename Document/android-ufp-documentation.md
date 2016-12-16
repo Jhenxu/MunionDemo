@@ -405,9 +405,8 @@ Demo中给出了一个信息流样式集成的使用场景，初始化过程在X
 ```
 AlimmContext.getAliContext().init(this);//必须保证这段代码最先执行
 ViewGroup fatherLayout = (ViewGroup) this.findViewById(R.id.ad);
-ListView listView = (ListView) this.findViewById(R.id.list);
 ExchangeViewManager exchangeViewManager = new ExchangeViewManager(this,new ExchangeDataService("slot_id"));
-exchangeViewManager.addView(fatherLayout, listView);    
+exchangeViewManager.addView(fatherLayout, null);    
 ```
 
 对应的布局文件如下：
